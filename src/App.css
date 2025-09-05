@@ -1,0 +1,187 @@
+.app {
+  display: flex;
+  height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background: #f0f8ff;
+}
+
+.debug-panel {
+  width: 400px;
+  height: 100vh;
+  overflow-y: auto;
+  background: #ffffff;
+  border-left: 1px solid #e0e0e0;
+  padding: 1rem;
+  box-shadow: -2px 0 8px rgba(0,0,0,0.1);
+}
+
+.debug-panel h3 {
+  margin-top: 0;
+  color: #2c3e50;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 0.5rem;
+}
+
+.debug-panel h4 {
+  color: #34495e;
+  margin: 1.5rem 0 0.5rem 0;
+  font-size: 0.9rem;
+}
+
+.stats {
+  background: #e8f5e8;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #27ae60;
+}
+
+.stats p {
+  margin: 0.3rem 0;
+  font-size: 0.85rem;
+  font-family: 'Courier New', monospace;
+}
+
+.layer-controls {
+  background: #f8f9fa;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+}
+
+.layer-toggles {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.layer-toggles label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 4px;
+  background: white;
+  border: 1px solid #e9ecef;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background-color 0.2s;
+}
+
+.layer-toggles label:hover {
+  background: #f8f9fa;
+}
+
+.layer-toggles input[type="checkbox"] {
+  margin: 0;
+}
+
+.zoom-controls, .tile-tests {
+  background: #fff3cd;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ffeaa7;
+}
+
+.button-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.button-grid button {
+  padding: 0.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: transform 0.1s;
+}
+
+.button-grid button:hover {
+  transform: translateY(-1px);
+}
+
+.debug-log {
+  background: #f8f9fa;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+}
+
+.log-content {
+  max-height: 200px;
+  overflow-y: auto;
+  font-family: 'Courier New', monospace;
+  font-size: 0.75rem;
+  line-height: 1.3;
+}
+
+.log-entry {
+  padding: 0.2rem 0;
+  border-bottom: 1px solid #f1f3f4;
+  color: #495057;
+}
+
+.bounds-info {
+  background: #e3f2fd;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #2196f3;
+}
+
+.bounds-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.3rem;
+  font-family: 'Courier New', monospace;
+  font-size: 0.8rem;
+}
+
+.performance-info {
+  background: #f3e5f5;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #9c27b0;
+}
+
+.performance-info ul {
+  margin: 0.5rem 0 0 0;
+  padding-left: 1.2rem;
+}
+
+.performance-info li {
+  font-size: 0.8rem;
+  margin: 0.3rem 0;
+  color: #4a148c;
+}
+
+/* Scrollbar styling */
+.debug-panel::-webkit-scrollbar,
+.log-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.debug-panel::-webkit-scrollbar-track,
+.log-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.debug-panel::-webkit-scrollbar-thumb,
+.log-content::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.debug-panel::-webkit-scrollbar-thumb:hover,
+.log-content::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
