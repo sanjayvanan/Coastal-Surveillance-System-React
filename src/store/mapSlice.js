@@ -9,6 +9,10 @@ const initialState = {
     pitch: 0,
     bearing: 0
   },
+  cursorCoordinates: {
+     longitude: 0,
+     latitude: 0
+  },
   satelliteVisible: false,
   satelliteLoading: true,
   selectedBasemap: 'maritime',
@@ -37,6 +41,9 @@ const mapSlice = createSlice({
     setViewState(state, action) {
       state.viewState = action.payload
     },
+    setCursorCoordinates(state, action) {
+      state.cursorCoordinates = action.payload
+    },
     setSatelliteVisible(state, action) {
       state.satelliteVisible = action.payload
     },
@@ -61,6 +68,7 @@ const mapSlice = createSlice({
 export const {
   setMapLoaded,
   setViewState,
+  setCursorCoordinates,
   setSatelliteVisible,
   setSatelliteLoading,
   toggleLayer,

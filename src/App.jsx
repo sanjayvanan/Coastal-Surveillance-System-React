@@ -5,6 +5,7 @@ import StatusPanel from './components/StatusPanel'
 import ControlsPanel from './components/ControlsPanel'
 import MapComponent from './components/MapComponent'
 import FooterInfo from './components/FooterInfo'
+import BottomBar from './components/BottomBar'
 
 export default function App() {
   return (
@@ -13,6 +14,7 @@ export default function App() {
       <ControlsPanel />
       <MapComponent />
       <FooterInfo />
+      <BottomBar />
     </div>
   )
 }
