@@ -326,3 +326,76 @@
     margin: 10px;
   }
 }
+
+
+.zoom-control-wrapper {
+  position: fixed;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  z-index: 1500;
+  user-select: none;
+  width: 40px;
+  font-family: system-ui, sans-serif;
+  color: #333;
+}
+
+.zoom-control-wrapper.dark {
+  background: rgba(50, 50, 50, 0.9);
+  color: #eee;
+}
+
+.zoom-button {
+  width: 100%;
+  height: 40px;
+  border: none;
+  background: #3498db;
+  color: white;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border-radius: 6px 6px 0 0;
+  user-select: none;
+}
+
+.zoom-button:last-child {
+  border-radius: 0 0 6px 6px;
+  font-size: 32px;
+  line-height: 0;
+}
+
+.zoom-button:hover {
+  background: #2980b9;
+}
+
+.zoom-button:active {
+  background: #1c5980;
+}
+
+.zoom-level {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 24px;
+  text-align: center;
+  padding: 2px 0;
+  width: 100%;
+  user-select: none;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  background: #f0f0f0;
+  color: #222;
+}
+
+.zoom-control-wrapper.dark .zoom-level {
+  background: #444;
+  border-top: 1px solid #666;
+  border-bottom: 1px solid #666;
+  color: #eee;
+}

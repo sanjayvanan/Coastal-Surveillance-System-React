@@ -1,0 +1,174 @@
+.sidebar-controls-panel {
+  position: fixed;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 0 8px 8px 0;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+  z-index: 1000;
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+}
+
+.sidebar-controls-panel.dark {
+  background: rgba(51,51,51,0.9);
+}
+
+.sidebar-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border: none;
+  background: transparent;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 6px;
+  width: 40px;
+  height: 40px;
+}
+
+.sidebar-button.dark {
+  color: #fff;
+}
+
+.sidebar-button:hover {
+  background: rgba(0,0,0,0.05);
+}
+
+.sidebar-button.dark:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+.sidebar-button.active {
+  background: #3498db;
+  color: white;
+}
+
+.sidebar-button.dark.active {
+  background: #2980b9;
+}
+
+.button-icon {
+  font-size: 20px;
+}
+
+.layer-control-panel {
+  position: absolute;
+  left: 60px;
+  border-radius: 4px;
+  padding: 15px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  background-color: #fff;
+  z-index: 1000;
+  min-width: 240px;
+  color: #333;
+}
+
+.layer-control-panel.dark {
+  background: #333;
+  color: white;
+}
+
+.layer-control-panel h4 {
+  margin: 0 0 10px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.layer-option {
+  display: flex;
+  align-items: center;
+  padding: 6px 0;
+  cursor: pointer;
+  font-size: 14px;
+  color: inherit;
+}
+
+.layer-option input {
+  margin-right: 8px;
+}
+
+.layer-option:hover {
+  background: rgba(52, 152, 219, 0.15);
+  border-radius: 4px;
+}
+
+hr {
+  border: 0;
+  height: 1px;
+  margin: 8px 0;
+  background: #ddd;
+}
+
+.satellite-toggle {
+  padding: 8px 16px;
+  background: #eee;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s ease;
+}
+
+.satellite-toggle.active {
+  background: #3498db;
+  color: white;
+}
+
+.satellite-toggle:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.help-text {
+  margin-top: 8px;
+  font-size: 12px;
+}
+
+.nav-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.nav-button {
+  padding: 6px 12px;
+  border: 1px solid #3498db;
+  border-radius: 4px;
+  background: transparent;
+  color: #3498db;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.nav-button:hover {
+  background: #3498db;
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .sidebar-controls-panel {
+    bottom: 0;
+    top: auto;
+    left: 0;
+    right: 0;
+    transform: none;
+    flex-direction: row;
+    justify-content: space-around;
+    border-radius: 8px 8px 0 0;
+  }
+  .layer-control-panel {
+    bottom: 70px;
+    left: 10px;
+    top: auto !important;
+    transform: none;
+  }
+}

@@ -1,6 +1,7 @@
 import React from 'react'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import './App.css'
+import './styles/ControlPanel.css'
 import StatusPanel from './components/StatusPanel'
 import ControlsPanel from './components/ControlsPanel'
 import MapComponent from './components/MapComponent'
