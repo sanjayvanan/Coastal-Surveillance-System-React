@@ -1,17 +1,7 @@
-// ENC (Electronic Navigational Chart) Complete Layer Configurations
-// All layers from your T-Rex config
+// ENC (Electronic Navigational Chart) Layer Configuration with S-57 (S-52 Day Palette) Colors
 
 export const getEncLayers = () => {
   return [
-    // BACKGROUND
-    {
-      id: 'enc-ocean-background',
-      type: 'background',
-      paint: {
-        'background-color': '#A5BFDD'
-      }
-    },
-
     // LAND AREAS (LNDARE)
     {
       id: 'enc-lndare-fill',
@@ -19,7 +9,7 @@ export const getEncLayers = () => {
       source: 'active-basemap',
       'source-layer': 'lndare_polygons',
       paint: {
-        'fill-color': '#F0E6D2',
+        'fill-color': '#D9C29E', // LANDA
         'fill-opacity': 1
       }
     },
@@ -29,29 +19,7 @@ export const getEncLayers = () => {
       source: 'active-basemap',
       'source-layer': 'lndare_polygons',
       paint: {
-        'line-color': '#8B7355',
-        'line-width': ['interpolate', ['linear'], ['zoom'], 0, 0.5, 8, 1, 12, 1.5],
-        'line-opacity': 0.8
-      }
-    },
-    {
-      id: 'enc-lndare-points',
-      type: 'circle',
-      source: 'active-basemap',
-      'source-layer': 'lndare_points',
-      minzoom: 10,
-      paint: {
-        'circle-radius': 3,
-        'circle-color': '#8B7355'
-      }
-    },
-    {
-      id: 'enc-lndare-lines',
-      type: 'line',
-      source: 'active-basemap',
-      'source-layer': 'lndare_lines',
-      paint: {
-        'line-color': '#8B7355',
+        'line-color': '#826644', // LANDB
         'line-width': 1
       }
     },
@@ -67,22 +35,12 @@ export const getEncLayers = () => {
           'interpolate',
           ['linear'],
           ['get', 'drval1'],
-          0, '#6BA3D4',    // Shallow
-          10, '#5B93C4',   // Medium
-          50, '#4B83B4',   // Deep
-          200, '#3B73A4'   // Very deep
+          0, '#9AD5FF',  // DEPVS (Very Shallow)
+          10, '#77B5FF', // DEPMD (Medium)
+          50, '#508CFF', // DEPIT (Intermediate)
+          200, '#285AFF' // DEPDW (Deep)
         ],
         'fill-opacity': 0.6
-      }
-    },
-    {
-      id: 'enc-depare-lines',
-      type: 'line',
-      source: 'active-basemap',
-      'source-layer': 'depare_lines',
-      paint: {
-        'line-color': '#4B83B4',
-        'line-width': 0.5
       }
     },
 
@@ -92,10 +50,9 @@ export const getEncLayers = () => {
       type: 'line',
       source: 'active-basemap',
       'source-layer': 'depcnt_lines',
-      minzoom: 6,
       paint: {
-        'line-color': '#7AAFE8',
-        'line-width': ['interpolate', ['linear'], ['zoom'], 6, 0.5, 12, 1.5],
+        'line-color': '#94BFFF', // DEPCN
+        'line-width': 1,
         'line-dasharray': [2, 2]
       }
     },
@@ -107,57 +64,46 @@ export const getEncLayers = () => {
       source: 'active-basemap',
       'source-layer': 'coalne_lines',
       paint: {
-        'line-color': '#2C5F2D',
-        'line-width': ['interpolate', ['linear'], ['zoom'], 4, 1, 12, 2]
-      }
-    },
-    {
-      id: 'enc-coastline-polygons',
-      type: 'line',
-      source: 'active-basemap',
-      'source-layer': 'coalne_polygons',
-      paint: {
-        'line-color': '#2C5F2D',
+        'line-color': '#6B4423', // CSTLN
         'line-width': 1.5
       }
     },
 
-    // BUOYS (BOYLAT, BOYSAW, BOYSPP)
+    // BUOYS (BOYLAT, BOYSPP, BOYSAW)
     {
-      id: 'enc-boylat',
+      id: 'enc-boylat-red',
       type: 'circle',
       source: 'active-basemap',
       'source-layer': 'boylat',
-      minzoom: 8,
       paint: {
-        'circle-radius': ['interpolate', ['linear'], ['zoom'], 8, 3, 12, 6],
-        'circle-color': '#FF0000',
+        'circle-radius': 5,
+        'circle-color': '#FF0000', // BCNLAT Red
         'circle-stroke-color': '#FFFFFF',
         'circle-stroke-width': 1
-      }
+      },
+      filter: ['==', ['get', 'color'], 'red']
     },
     {
-      id: 'enc-boysaw',
+      id: 'enc-boylat-green',
       type: 'circle',
       source: 'active-basemap',
-      'source-layer': 'boysaw',
-      minzoom: 8,
+      'source-layer': 'boylat',
       paint: {
-        'circle-radius': ['interpolate', ['linear'], ['zoom'], 8, 3, 12, 6],
-        'circle-color': '#FFA500',
+        'circle-radius': 5,
+        'circle-color': '#00FF00', // BCNLAT Green
         'circle-stroke-color': '#FFFFFF',
         'circle-stroke-width': 1
-      }
+      },
+      filter: ['==', ['get', 'color'], 'green']
     },
     {
       id: 'enc-boyspp',
       type: 'circle',
       source: 'active-basemap',
       'source-layer': 'boyspp',
-      minzoom: 8,
       paint: {
-        'circle-radius': ['interpolate', ['linear'], ['zoom'], 8, 3, 12, 6],
-        'circle-color': '#FFFF00',
+        'circle-radius': 5,
+        'circle-color': '#FFFF00', // Special - Yellow
         'circle-stroke-color': '#000000',
         'circle-stroke-width': 1
       }
@@ -169,10 +115,9 @@ export const getEncLayers = () => {
       type: 'circle',
       source: 'active-basemap',
       'source-layer': 'bcnlat',
-      minzoom: 8,
       paint: {
-        'circle-radius': ['interpolate', ['linear'], ['zoom'], 8, 4, 12, 7],
-        'circle-color': '#00FF00',
+        'circle-radius': 6,
+        'circle-color': '#FF0000', // Red lateral
         'circle-stroke-color': '#000000',
         'circle-stroke-width': 1
       }
@@ -182,92 +127,106 @@ export const getEncLayers = () => {
       type: 'circle',
       source: 'active-basemap',
       'source-layer': 'bcnspp',
-      minzoom: 8,
       paint: {
-        'circle-radius': ['interpolate', ['linear'], ['zoom'], 8, 4, 12, 7],
-        'circle-color': '#FFFF00',
+        'circle-radius': 6,
+        'circle-color': '#FFFF00', // Yellow special
         'circle-stroke-color': '#000000',
         'circle-stroke-width': 1
       }
     },
 
-    // LIGHTS
+   // LIGHTS - S-57 Standard Display
+    // Light Range Circle (Nominal Range)
     {
-      id: 'enc-lights',
-      type: 'symbol',
+      id: 'enc-lights-range',
+      type: 'circle',
       source: 'active-basemap',
       'source-layer': 'lights',
-      minzoom: 8,
-      layout: {
-        'icon-image': 'lighthouse-15', // Use built-in or custom icon
-        'icon-size': ['interpolate', ['linear'], ['zoom'], 8, 0.5, 12, 1]
-      },
       paint: {
-        'icon-color': '#FFFF00'
+        'circle-radius': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          8, ['*', ['coalesce', ['get', 'valnmr'], 5], 0.5],  // valnmr = nominal range in nautical miles
+          12, ['*', ['coalesce', ['get', 'valnmr'], 5], 2],
+          16, ['*', ['coalesce', ['get', 'valnmr'], 5], 4]
+        ],
+        'circle-color': 'transparent',
+        'circle-stroke-color': '#CCCF00', // LITRD (Light radius color)
+        'circle-stroke-width': 1,
+        'circle-stroke-opacity': 0.6
+      },
+      minzoom: 10
+    },
+    // Light Center Point with Color
+    {
+      id: 'enc-lights-center',
+      type: 'circle',
+      source: 'active-basemap',
+      'source-layer': 'lights',
+      paint: {
+        'circle-radius': 5,
+        'circle-color': [
+          'match',
+          ['get', 'colour'],
+          1, '#FFFFFF',  // White (W)
+          3, '#FF0000',  // Red (R)
+          4, '#00FF00',  // Green (G)
+          6, '#FFFF00',  // Yellow (Y)
+          11, '#FFA500', // Orange (Or)
+          '#FFFF00'      // Default yellow
+        ],
+        'circle-stroke-color': '#000000',
+        'circle-stroke-width': 1
+      }
+    },
+    // Light Flare Effect (Star)
+    {
+      id: 'enc-lights-flare',
+      type: 'circle',
+      source: 'active-basemap',
+      'source-layer': 'lights',
+      paint: {
+        'circle-radius': 8,
+        'circle-color': [
+          'match',
+          ['get', 'colour'],
+          1, '#FFFFFF',
+          3, '#FF0000',
+          4, '#00FF00',
+          6, '#FFFF00',
+          11, '#FFA500',
+          '#FFFF00'
+        ],
+        'circle-opacity': 0.3,
+        'circle-blur': 0.8
       }
     },
 
     // OBSTRUCTIONS (OBSTRN)
     {
-      id: 'enc-obstrn-points',
+      id: 'enc-obstrn',
       type: 'circle',
       source: 'active-basemap',
       'source-layer': 'obstrn_points',
-      minzoom: 8,
       paint: {
         'circle-radius': 4,
         'circle-color': '#FF0000',
         'circle-opacity': 0.7
       }
     },
-    {
-      id: 'enc-obstrn-polygons',
-      type: 'fill',
-      source: 'active-basemap',
-      'source-layer': 'obstrn_polygons',
-      minzoom: 8,
-      paint: {
-        'fill-color': '#FF0000',
-        'fill-opacity': 0.3,
-        'fill-outline-color': '#CC0000'
-      }
-    },
-    {
-      id: 'enc-obstrn-lines',
-      type: 'line',
-      source: 'active-basemap',
-      'source-layer': 'obstrn_lines',
-      minzoom: 8,
-      paint: {
-        'line-color': '#FF0000',
-        'line-width': 2,
-        'line-dasharray': [3, 3]
-      }
-    },
 
     // WRECKS
     {
-      id: 'enc-wrecks-points',
+      id: 'enc-wrecks',
       type: 'circle',
       source: 'active-basemap',
       'source-layer': 'wrecks_points',
-      minzoom: 8,
       paint: {
         'circle-radius': 5,
         'circle-color': '#8B4513',
         'circle-stroke-color': '#000000',
         'circle-stroke-width': 1
-      }
-    },
-    {
-      id: 'enc-wrecks-polygons',
-      type: 'fill',
-      source: 'active-basemap',
-      'source-layer': 'wrecks_polygons',
-      minzoom: 8,
-      paint: {
-        'fill-color': '#8B4513',
-        'fill-opacity': 0.5
       }
     },
 
@@ -277,25 +236,23 @@ export const getEncLayers = () => {
       type: 'circle',
       source: 'active-basemap',
       'source-layer': 'uwtroc',
-      minzoom: 8,
       paint: {
-        'circle-radius': 3,
+        'circle-radius': 4,
         'circle-color': '#A0522D',
         'circle-opacity': 0.8
       }
     },
 
-    // SOUNDINGS
+    // SOUNDINGS (SNDG)
     {
       id: 'enc-soundg',
       type: 'circle',
       source: 'active-basemap',
       'source-layer': 'soundg',
-      minzoom: 10,
       paint: {
         'circle-radius': 2,
-        'circle-color': '#4B83B4',
-        'circle-opacity': 0.6
+        'circle-color': '#94BFFF', // SNDG1
+        'circle-opacity': 0.8
       }
     },
 
@@ -305,9 +262,8 @@ export const getEncLayers = () => {
       type: 'fill',
       source: 'active-basemap',
       'source-layer': 'resare',
-      minzoom: 6,
       paint: {
-        'fill-color': '#FF00FF',
+        'fill-color': '#FF00FF', // RESBL
         'fill-opacity': 0.2,
         'fill-outline-color': '#CC00CC'
       }
@@ -319,73 +275,19 @@ export const getEncLayers = () => {
       type: 'fill',
       source: 'active-basemap',
       'source-layer': 'achare_polygons',
-      minzoom: 8,
       paint: {
-        'fill-color': '#00FFFF',
+        'fill-color': '#00FFFF', // ACHBL
         'fill-opacity': 0.3,
         'fill-outline-color': '#00CCCC'
       }
     },
 
-    // BUILDINGS (BUISGL)
-    {
-      id: 'enc-buisgl-points',
-      type: 'circle',
-      source: 'active-basemap',
-      'source-layer': 'buisgl_points',
-      minzoom: 10,
-      paint: {
-        'circle-radius': 3,
-        'circle-color': '#808080'
-      }
-    },
-    {
-      id: 'enc-buisgl-polygons',
-      type: 'fill',
-      source: 'active-basemap',
-      'source-layer': 'buisgl_polygons',
-      minzoom: 10,
-      paint: {
-        'fill-color': '#808080',
-        'fill-opacity': 0.7,
-        'fill-outline-color': '#404040'
-      }
-    },
-
-    // LANDMARKS (LNDMRK)
-    {
-      id: 'enc-lndmrk',
-      type: 'circle',
-      source: 'active-basemap',
-      'source-layer': 'lndmrk_points',
-      minzoom: 10,
-      paint: {
-        'circle-radius': 4,
-        'circle-color': '#FFA500',
-        'circle-stroke-color': '#FFFFFF',
-        'circle-stroke-width': 1
-      }
-    },
-
-    // TRAFFIC SEPARATION (TSSLPT, TSSBND)
-    {
-      id: 'enc-tsslpt',
-      type: 'fill',
-      source: 'active-basemap',
-      'source-layer': 'tsslpt',
-      minzoom: 6,
-      paint: {
-        'fill-color': '#FF00FF',
-        'fill-opacity': 0.2,
-        'fill-outline-color': '#CC00CC'
-      }
-    },
+    // TRAFFIC SEPARATION (TSSBND)
     {
       id: 'enc-tssbnd',
       type: 'line',
       source: 'active-basemap',
       'source-layer': 'tssbnd_lines',
-      minzoom: 6,
       paint: {
         'line-color': '#FF00FF',
         'line-width': 2,
@@ -393,13 +295,12 @@ export const getEncLayers = () => {
       }
     },
 
-    // CABLES & PIPELINES (CBLSUB, PIPSOL)
+    // CABLES & PIPELINES
     {
       id: 'enc-cblsub',
       type: 'line',
       source: 'active-basemap',
       'source-layer': 'cblsub_lines',
-      minzoom: 8,
       paint: {
         'line-color': '#FFD700',
         'line-width': 1.5,
@@ -411,26 +312,10 @@ export const getEncLayers = () => {
       type: 'line',
       source: 'active-basemap',
       'source-layer': 'pipsol_lines',
-      minzoom: 8,
       paint: {
         'line-color': '#8B4513',
         'line-width': 1.5,
         'line-dasharray': [5, 3]
-      }
-    },
-
-    // FOG SIGNALS (FOGSIG)
-    {
-      id: 'enc-fogsig',
-      type: 'circle',
-      source: 'active-basemap',
-      'source-layer': 'fogsig',
-      minzoom: 10,
-      paint: {
-        'circle-radius': 4,
-        'circle-color': '#808080',
-        'circle-stroke-color': '#FFFFFF',
-        'circle-stroke-width': 1
       }
     },
 
@@ -440,41 +325,12 @@ export const getEncLayers = () => {
       type: 'circle',
       source: 'active-basemap',
       'source-layer': 'rdosta',
-      minzoom: 10,
       paint: {
         'circle-radius': 4,
         'circle-color': '#0000FF',
         'circle-stroke-color': '#FFFFFF',
         'circle-stroke-width': 1
       }
-    },
-
-    // TOPMARKS (TOPMAR)
-    {
-      id: 'enc-topmar',
-      type: 'circle',
-      source: 'active-basemap',
-      'source-layer': 'topmar',
-      minzoom: 10,
-      paint: {
-        'circle-radius': 3,
-        'circle-color': '#000000'
-      }
-    },
-
-    // DAY MARKS (DAYMAR)
-    {
-      id: 'enc-daymar',
-      type: 'circle',
-      source: 'active-basemap',
-      'source-layer': 'daymar',
-      minzoom: 10,
-      paint: {
-        'circle-radius': 3,
-        'circle-color': '#FFFF00',
-        'circle-stroke-color': '#000000',
-        'circle-stroke-width': 1
-      }
     }
-  ]
-}
+  ];
+};

@@ -77,19 +77,21 @@ export default function SidebarControlsPanel() {
   const baseMapPanel = (
     <div className={`layer-control-panel ${theme}`} style={{ top: buttonPosition.top }}>
       <h4>Base Maps</h4>
-      {basemapOptions.map((option) => (
-        <label key={option.id} className="layer-option">
-          <input
-            type="radio"
-            name="baseLayer"
-            checked={selectedBasemap === option.id}
-            onChange={() => dispatch(setSelectedBasemap(option.id))}
-          />
-          <span>
-            <strong>{option.name}</strong> - {option.description}
-          </span>
-        </label>
-      ))}
+      {basemapOptions
+        .filter((option) => option.id !== 'enc') // Prevent ENC from being a selectable basemap
+        .map((option) => (
+          <label key={option.id} className="layer-option">
+            <input
+              type="radio"
+              name="baseLayer"
+              checked={selectedBasemap === option.id}
+              onChange={() => dispatch(setSelectedBasemap(option.id))}
+            />
+            <span>
+              <strong>{option.name}</strong> - {option.description}
+            </span>
+          </label>
+        ))}
     </div>
   )
 
@@ -97,6 +99,15 @@ export default function SidebarControlsPanel() {
   const overlaysPanel = (
     <div className={`layer-control-panel ${theme}`} style={{ top: buttonPosition.top, maxHeight: 320, overflowY: 'auto' }}>
       <h4>Overlays</h4>
+      <label className="layer-option">
+        <input
+          type="checkbox"
+          checked={layerVisibility.encTiles}
+          onChange={() => dispatch(toggleLayer('encTiles'))}
+        />
+        <span>🗺️ Electronic Navigational Charts (ENC)</span>
+      </label>
+      <hr />
       <label className="layer-option">
         <input
           type="checkbox"

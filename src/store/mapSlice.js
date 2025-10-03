@@ -22,7 +22,7 @@ const initialState = {
     depare: true,
     lndarePolygon: true,
     marineNavigation: true,
-    encTiles: false // Add ENC tiles toggle
+    encTiles: true // Add ENC tiles toggle
   },
   collapsedSections: {
     basemaps: false,
