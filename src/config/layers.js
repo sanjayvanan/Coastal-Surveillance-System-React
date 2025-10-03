@@ -1,3 +1,5 @@
+import { getEncLayers } from './encLayers'
+
 export const mapStyle = {
   version: 8,
   sources: {},
@@ -13,6 +15,7 @@ export const mapStyle = {
 
 export function getBasemapLayers(basemapType) {
   const sourceId = 'active-basemap'
+  
   switch (basemapType) {
     case 'maritime':
       return [
@@ -38,12 +41,23 @@ export function getBasemapLayers(basemapType) {
           }
         }
       ]
+    
+    case 'enc':
+      return getEncLayers()
+    
+    case 'openstreetmap':
+    case 'dark':
+    case 'esriSatellite':
+    case 'cartoDB':
     default:
       return [{
         id: 'basemap-raster',
         type: 'raster',
         source: sourceId,
-        paint: { 'raster-opacity': 1, 'raster-fade-duration': 300 }
+        paint: { 
+          'raster-opacity': 1, 
+          'raster-fade-duration': 300 
+        }
       }]
   }
 }
@@ -137,5 +151,3 @@ export const marineNavigationLayer = (visible) => ({
   paint: { 'raster-opacity': 1, 'raster-fade-duration': 300 },
   layout: { 'visibility': visible ? 'visible' : 'none' }
 })
-
-

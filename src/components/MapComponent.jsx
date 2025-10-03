@@ -426,6 +426,7 @@ export default function MapComponent() {
         <div>🎯 Icon: {iconReady ? '✅' : '⏳'}</div>
         <div>📈 Strategy: {samplingStrategy}</div>
         <div>🔄 Loading: {isFetching ? '⏳' : '✅'}</div>
+        <div>🗺️ ENC: {selectedBasemap === 'enc' ? '✅' : '❌'}</div>
         {debouncedBounds && (
           <div style={{ fontSize: '10px', marginTop: '5px', opacity: 0.8 }}>
             Query Bounds: {debouncedBounds.minLat.toFixed(1)},{debouncedBounds.minLng.toFixed(1)} to {debouncedBounds.maxLat.toFixed(1)},{debouncedBounds.maxLng.toFixed(1)}

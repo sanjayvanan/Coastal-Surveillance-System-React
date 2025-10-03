@@ -21,7 +21,8 @@ const initialState = {
     lndare: true,
     depare: true,
     lndarePolygon: true,
-    marineNavigation: true
+    marineNavigation: true,
+    encTiles: false // Add ENC tiles toggle
   },
   collapsedSections: {
     basemaps: false,
@@ -77,5 +78,3 @@ export const {
 } = mapSlice.actions
 
 export default mapSlice.reducer
-
-

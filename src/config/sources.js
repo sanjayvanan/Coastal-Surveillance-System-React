@@ -6,6 +6,14 @@ export const basemapSources = {
     maxzoom: 18,
     attribution: 'Maritime Basemap'
   },
+   enc: {
+    type: 'vector',
+    tiles: ['http://127.0.0.1:6767/enc/{z}/{x}/{y}.pbf'],
+    minzoom: 4,  // From enc.json
+    maxzoom: 12, // From enc.json
+    bounds: [-98.116667, 17.791497, -76.1, 33.6085], // From enc.json
+    attribution: 'Electronic Navigational Charts'
+  },
   openstreetmap: {
     type: 'raster',
     tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
@@ -65,5 +73,3 @@ export const marineNavigationSource = {
   tileSize: 256,
   attribution: '© OpenSeaMap'
 }
-
-
