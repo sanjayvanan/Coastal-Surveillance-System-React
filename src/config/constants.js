@@ -5,11 +5,6 @@ export const basemapOptions = [
     description: 'Detailed nautical charts with depth contours'
   },
   {
-    id: 'enc',
-    name: 'ENC Charts', 
-    description: 'Electronic Navigational Charts (S-57 format)'
-  },
-  {
     id: 'dark',
     name: 'Dark Map',
     description: 'Perfect for night navigation'

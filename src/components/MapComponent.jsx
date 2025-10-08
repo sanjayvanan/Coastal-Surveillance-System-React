@@ -248,6 +248,7 @@ export default function MapComponent() {
           map={mapRef.current?.getMap?.()} 
           debouncedBounds={debouncedBounds}
           debouncedZoom={debouncedZoom}
+          key ={basemapKey}
         />
       </ReactMapGL>
     </>

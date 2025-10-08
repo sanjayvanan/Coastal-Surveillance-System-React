@@ -79,7 +79,7 @@ const createTriangleIcon = (map) => {
   const centerY = 10
   
   ctx.clearRect(0, 0, 20, 20)
-  ctx.fillStyle = '#ef4444' // Red arrow
+  ctx.fillStyle = '#227138ff' // Red arrow
   ctx.beginPath()
   ctx.moveTo(centerX, centerY - 7)      // Top
   ctx.lineTo(centerX - 4, centerY + 7)  // Bottom left
@@ -223,40 +223,16 @@ const useShipIcons = (map) => {
   return { triangleReady, iconReady }
 }
 
-/**
- * Hook to ensure layers stay on top when basemap changes
- */
-const useLayerOrdering = (map, hasLayers) => {
-  useEffect(() => {
-    if (!map || !hasLayers) return
-
-    // Ensure layers are on top when style loads
-    const onStyleData = () => {
-      // Small delay to ensure all basemap layers are loaded
-      setTimeout(() => ensureLayersOnTop(map), 100)
-    }
-
-    // Listen for style changes (basemap changes)
-    map.on('styledata', onStyleData)
-    
-    // Initial positioning
-    ensureLayersOnTop(map)
-
-    return () => {
-      map.off('styledata', onStyleData)
-    }
-  }, [map, hasLayers])
-}
-
 // ============================================================================
 // MAIN COMPONENT
 // ============================================================================
 
 const ShipsLayer = ({ map, debouncedBounds, debouncedZoom }) => {
   const themeMode = useSelector(state => state.theme.mode)
+  const basemapKey = useSelector(state => state.map.basemapKey)
   
   // Fetch ships data
-  const { 
+  const {
     data: shipsData, 
     isLoading, 
     error,
@@ -294,8 +270,38 @@ const ShipsLayer = ({ map, debouncedBounds, debouncedZoom }) => {
   const hasShips = shipsGeoJson.features.length > 0
   const hasLayers = (triangleReady || iconReady) && hasShips
 
-  // Ensure ship layers stay on top when basemap changes
-  useLayerOrdering(map, hasLayers)
+  // Reorder layers when basemap changes (watching basemapKey from Redux)
+  useEffect(() => {
+    if (!map || !hasLayers) return
+    
+    console.log('🔄 Basemap key changed, reordering ship layers...')
+    
+    // Retry mechanism to ensure layers exist before moving them
+    let attempts = 0
+    const maxAttempts = 10
+    
+    const tryReorder = () => {
+      const shipLayerIds = Object.values(LAYER_IDS)
+      const allLayersExist = shipLayerIds.every(id => {
+        try {
+          return map.getLayer(id) !== undefined
+        } catch {
+          return false
+        }
+      })
+      
+      if (allLayersExist) {
+        ensureLayersOnTop(map)
+        console.log('✅ Ship layers reordered successfully')
+      } else if (attempts < maxAttempts) {
+        attempts++
+        setTimeout(tryReorder, 100 * attempts)
+      }
+    }
+    
+    // Wait a bit for basemap layers to be added, then reorder
+    setTimeout(tryReorder, 300)
+  }, [map, hasLayers, basemapKey])
 
   // ============================================================================
   // LAYER STYLES
@@ -428,7 +434,7 @@ const ShipsLayer = ({ map, debouncedBounds, debouncedZoom }) => {
           <Layer
             id={LAYER_IDS.TRIANGLES}
             type="symbol"
-            filter={['<=', ['zoom'], 8]}
+            filter={['<=', ['zoom'], 6]}
             layout={triangleLayout}
             paint={iconPaint}
           />
@@ -441,7 +447,7 @@ const ShipsLayer = ({ map, debouncedBounds, debouncedZoom }) => {
           <Layer
             id={LAYER_IDS.ICONS}
             type="symbol"
-            filter={['>', ['zoom'], 8]}
+            filter={['>', ['zoom'], 6]}
             layout={shipIconLayout}
             paint={iconPaint}
           />
