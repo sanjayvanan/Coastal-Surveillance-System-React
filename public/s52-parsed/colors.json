@@ -1,0 +1,352 @@
+{
+  "NODTA": {
+    "name": "NODTA",
+    "r": 163,
+    "g": 180,
+    "b": 183,
+    "hex": "#a3b4b7"
+  },
+  "CURSR": {
+    "name": "CURSR",
+    "r": 255,
+    "g": 255,
+    "b": 0,
+    "hex": "#ffff00"
+  },
+  "CHBLK": {
+    "name": "CHBLK",
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "hex": "#000000"
+  },
+  "CHGRD": {
+    "name": "CHGRD",
+    "r": 190,
+    "g": 190,
+    "b": 190,
+    "hex": "#bebebe"
+  },
+  "CHGRF": {
+    "name": "CHGRF",
+    "r": 163,
+    "g": 163,
+    "b": 163,
+    "hex": "#a3a3a3"
+  },
+  "DEPIT": {
+    "name": "DEPIT",
+    "r": 198,
+    "g": 226,
+    "b": 255,
+    "hex": "#c6e2ff"
+  },
+  "DEPMD": {
+    "name": "DEPMD",
+    "r": 170,
+    "g": 211,
+    "b": 255,
+    "hex": "#aad3ff"
+  },
+  "DEPMS": {
+    "name": "DEPMS",
+    "r": 141,
+    "g": 180,
+    "b": 226,
+    "hex": "#8db4e2"
+  },
+  "DEPVS": {
+    "name": "DEPVS",
+    "r": 198,
+    "g": 226,
+    "b": 255,
+    "hex": "#c6e2ff"
+  },
+  "DEPDW": {
+    "name": "DEPDW",
+    "r": 170,
+    "g": 211,
+    "b": 255,
+    "hex": "#aad3ff"
+  },
+  "DEPCN": {
+    "name": "DEPCN",
+    "r": 148,
+    "g": 191,
+    "b": 255,
+    "hex": "#94bfff"
+  },
+  "LANDA": {
+    "name": "LANDA",
+    "r": 217,
+    "g": 194,
+    "b": 158,
+    "hex": "#d9c29e"
+  },
+  "LANDF": {
+    "name": "LANDF",
+    "r": 217,
+    "g": 194,
+    "b": 158,
+    "hex": "#d9c29e"
+  },
+  "CSTLN": {
+    "name": "CSTLN",
+    "r": 107,
+    "g": 68,
+    "b": 35,
+    "hex": "#6b4423"
+  },
+  "LITRD": {
+    "name": "LITRD",
+    "r": 255,
+    "g": 0,
+    "b": 0,
+    "hex": "#ff0000"
+  },
+  "LITGN": {
+    "name": "LITGN",
+    "r": 0,
+    "g": 255,
+    "b": 0,
+    "hex": "#00ff00"
+  },
+  "LITYW": {
+    "name": "LITYW",
+    "r": 255,
+    "g": 255,
+    "b": 0,
+    "hex": "#ffff00"
+  },
+  "TRFCD": {
+    "name": "TRFCD",
+    "r": 193,
+    "g": 0,
+    "b": 0,
+    "hex": "#c10000"
+  },
+  "TRFCF": {
+    "name": "TRFCF",
+    "r": 193,
+    "g": 0,
+    "b": 0,
+    "hex": "#c10000"
+  },
+  "DEPSC": {
+    "name": "DEPSC",
+    "r": 65,
+    "g": 105,
+    "b": 225,
+    "hex": "#4169e1"
+  },
+  "RESBL": {
+    "name": "RESBL",
+    "r": 255,
+    "g": 0,
+    "b": 255,
+    "hex": "#ff00ff"
+  },
+  "RESGR": {
+    "name": "RESGR",
+    "r": 0,
+    "g": 128,
+    "b": 0,
+    "hex": "#008000"
+  },
+  "CHCOR": {
+    "name": "CHCOR",
+    "r": 255,
+    "g": 192,
+    "b": 203,
+    "hex": "#ffc0cb"
+  },
+  "CHBRN": {
+    "name": "CHBRN",
+    "r": 139,
+    "g": 69,
+    "b": 19,
+    "hex": "#8b4513"
+  },
+  "CHRED": {
+    "name": "CHRED",
+    "r": 255,
+    "g": 0,
+    "b": 0,
+    "hex": "#ff0000"
+  },
+  "CHGRN": {
+    "name": "CHGRN",
+    "r": 0,
+    "g": 255,
+    "b": 0,
+    "hex": "#00ff00"
+  },
+  "CHYLW": {
+    "name": "CHYLW",
+    "r": 255,
+    "g": 255,
+    "b": 0,
+    "hex": "#ffff00"
+  },
+  "CHBLU": {
+    "name": "CHBLU",
+    "r": 0,
+    "g": 0,
+    "b": 255,
+    "hex": "#0000ff"
+  },
+  "SNDG1": {
+    "name": "SNDG1",
+    "r": 114,
+    "g": 159,
+    "b": 207,
+    "hex": "#729fcf"
+  },
+  "SNDG2": {
+    "name": "SNDG2",
+    "r": 32,
+    "g": 74,
+    "b": 135,
+    "hex": "#204a87"
+  },
+  "SHIPS": {
+    "name": "SHIPS",
+    "r": 255,
+    "g": 0,
+    "b": 0,
+    "hex": "#ff0000"
+  },
+  "PSTRK": {
+    "name": "PSTRK",
+    "r": 255,
+    "g": 140,
+    "b": 0,
+    "hex": "#ff8c00"
+  },
+  "SYTRK": {
+    "name": "SYTRK",
+    "r": 255,
+    "g": 215,
+    "b": 0,
+    "hex": "#ffd700"
+  },
+  "PLRTE": {
+    "name": "PLRTE",
+    "r": 255,
+    "g": 0,
+    "b": 255,
+    "hex": "#ff00ff"
+  },
+  "APLRT": {
+    "name": "APLRT",
+    "r": 255,
+    "g": 105,
+    "b": 180,
+    "hex": "#ff69b4"
+  },
+  "UINFR": {
+    "name": "UINFR",
+    "r": 255,
+    "g": 165,
+    "b": 0,
+    "hex": "#ffa500"
+  },
+  "UINFG": {
+    "name": "UINFG",
+    "r": 0,
+    "g": 255,
+    "b": 0,
+    "hex": "#00ff00"
+  },
+  "UINFB": {
+    "name": "UINFB",
+    "r": 0,
+    "g": 0,
+    "b": 255,
+    "hex": "#0000ff"
+  },
+  "UINFF": {
+    "name": "UINFF",
+    "r": 255,
+    "g": 255,
+    "b": 0,
+    "hex": "#ffff00"
+  },
+  "UIAFD": {
+    "name": "UIAFD",
+    "r": 192,
+    "g": 192,
+    "b": 192,
+    "hex": "#c0c0c0"
+  },
+  "UIAFF": {
+    "name": "UIAFF",
+    "r": 211,
+    "g": 211,
+    "b": 211,
+    "hex": "#d3d3d3"
+  },
+  "UINFM": {
+    "name": "UINFM",
+    "r": 255,
+    "g": 0,
+    "b": 255,
+    "hex": "#ff00ff"
+  },
+  "UIBCK": {
+    "name": "UIBCK",
+    "r": 240,
+    "g": 240,
+    "b": 240,
+    "hex": "#f0f0f0"
+  },
+  "UIBDR": {
+    "name": "UIBDR",
+    "r": 128,
+    "g": 128,
+    "b": 128,
+    "hex": "#808080"
+  },
+  "OUTLW": {
+    "name": "OUTLW",
+    "r": 255,
+    "g": 255,
+    "b": 255,
+    "hex": "#ffffff"
+  },
+  "OUTLL": {
+    "name": "OUTLL",
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "hex": "#000000"
+  },
+  "SCLBR": {
+    "name": "SCLBR",
+    "r": 255,
+    "g": 255,
+    "b": 255,
+    "hex": "#ffffff"
+  },
+  "ADINF": {
+    "name": "ADINF",
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "hex": "#000000"
+  },
+  "CHMGD": {
+    "name": "CHMGD",
+    "r": 255,
+    "g": 0,
+    "b": 255,
+    "hex": "#ff00ff"
+  },
+  "CHMGF": {
+    "name": "CHMGF",
+    "r": 255,
+    "g": 255,
+    "b": 0,
+    "hex": "#ffff00"
+  }
+}

@@ -3,9 +3,9 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
   mapLoaded: false,
   viewState: {
-    longitude: 80.7718,
-    latitude: 7.8731,
-    zoom: 7,
+    longitude: -81.3142,
+    latitude: 24.6284,
+    zoom: 10,
     pitch: 0,
     bearing: 0
   },
@@ -21,7 +21,7 @@ const initialState = {
     lndare: true,
     depare: true,
     lndarePolygon: true,
-    marineNavigation: true,
+    marineNavigation: false,
     encTiles: true // Add ENC tiles toggle
   },
   collapsedSections: {

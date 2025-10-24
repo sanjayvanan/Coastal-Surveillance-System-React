@@ -1,287 +1,1474 @@
-// ENC (Electronic Navigational Chart) Layer Configuration with S-57 (S-52 Day Palette) Colors
-// Enhanced with text labels for depth soundings and feature names
+// // encLayers.js - ENC Layer Configuration with S-57 Symbol Support
 
-export const getEncLayers = () => {
-  return [
-    // LAND AREAS (LNDARE)
-    {
-      id: 'enc-lndare-fill',
-      type: 'fill',
-      source: 'active-basemap',
-      'source-layer': 'lndare_polygons',
-      paint: {
-        'fill-color': '#D9C29E', // LANDA
-        'fill-opacity': 1
-      }
-    },
-    {
-      id: 'enc-lndare-outline',
-      type: 'line',
-      source: 'active-basemap',
-      'source-layer': 'lndare_polygons',
-      paint: {
-        'line-color': '#826644', // LANDB
-        'line-width': 1
-      }
-    },
+// // Generated ENC Symbol Definitions from OpenCPN chartsymbols
+// // Auto-extracted coordinates for sprite sheet
+// // Total symbols: 1015
+// // Generated: 08/10/2025, 14:39:29
 
-   // DEPTH AREAS (DEPARE)
-{
-  id: 'enc-depare-fill',
-  type: 'fill',
-  source: 'active-basemap',
-  'source-layer': 'depare_polygons',
-  paint: {
-    'fill-color': [
-      'interpolate',
-      ['linear'],
-      ['get', 'drval1'],
-      0, '#9AD5FF',   // DEPVS (Very Shallow, S-52)
-      10, '#77B5FF',  // DEPMD (Medium, S-52)
-      50, '#508CFF',  // DEPIT (Intermediate, S-52)
-      200, '#285AFF'  // DEPDW (Deep, S-52)
-    ],
-    'fill-opacity': 0.6
-  }
-},
+// export const SYMBOL_DEFINITIONS = {
+//   // Buoys - Lateral (Red/Green) (9 symbols)
+//   'BOYLAT13': { x: 1232, y: 10, width: 14, height: 14 },
+//   'BOYLAT14': { x: 1256, y: 10, width: 14, height: 14 },
+//   'BOYLAT23': { x: 1280, y: 10, width: 16, height: 13 },
+//   'BOYLAT24': { x: 1306, y: 10, width: 16, height: 13 },
+//   'BOYLAT50': { x: 299, y: 358, width: 16, height: 13 },
+//   'BOYLAT51': { x: 325, y: 358, width: 14, height: 14 },
+//   'BOYLAT25': { x: 211, y: 495, width: 17, height: 17 },
+//   'BOYLAT26': { x: 238, y: 495, width: 10, height: 20 },
+//   'BOYLAT27': { x: 258, y: 495, width: 10, height: 20 },
 
-//It is working but we dont need to show depth area labels on the default map view, on user interaction we can show it
+//   // Buoys - Special Purpose (Yellow) (3 symbols)
+//   'BOYSPP11': { x: 37, y: 78, width: 13, height: 13 },
+//   'BOYSPP15': { x: 60, y: 78, width: 14, height: 14 },
+//   'BOYSPP25': { x: 84, y: 78, width: 16, height: 13 },
 
-// // DEPTH AREA LABELS
-// {
-//   id: 'enc-depare-labels',
-//   type: 'symbol',
-//   source: 'active-basemap',
-//   'source-layer': 'depare_polygons',
-//   minzoom: 10,
-//   layout: {
-//     'text-field': [
-//       'concat',
-//       ['to-string', ['coalesce', ['get', 'drval1'], '']],
-//       '-',
-//       ['to-string', ['coalesce', ['get', 'drval2'], '']]
-//     ],
-//     'text-font': ['Open Sans Regular', 'Arial Unicode MS Regular'],
-//     'text-size': 11,
-//     'symbol-placement': 'point'
-//   },
-//   paint: {
-//     'text-color': '#1e3a8a',      // DEPDW text
-//     'text-halo-color': '#ffffff', // white halo
-//     'text-halo-width': 1.5
-//   }
-// },
+//   // Buoys - Safe Water (1 symbols)
+//   'BOYSAW12': { x: 1451, y: 10, width: 13, height: 13 },
 
-// DEPTH CONTOURS (DEPCNT)              // dotted lines on the depth areas
-{
-  id: 'enc-depcnt-lines',
-  type: 'line',
-  source: 'active-basemap',
-  'source-layer': 'depcnt_lines',
-  paint: {
-    'line-color': '#94BFFF',    // DEPCN S-52
-    'line-width': 1,
-    'line-dasharray': [2, 2]    // 'dashed'
-  }
-},
+//   // Buoys - Cardinal (4 symbols)
+//   'BOYCAR01': { x: 984, y: 10, width: 13, height: 19 },
+//   'BOYCAR02': { x: 1007, y: 10, width: 12, height: 20 },
+//   'BOYCAR03': { x: 1029, y: 10, width: 13, height: 19 },
+//   'BOYCAR04': { x: 1052, y: 10, width: 19, height: 19 },
 
-// Works but we dont need to show depth contour labels on the default map view, on user interaction we can show it
+//   // Buoys - Isolated Danger (1 symbols)
+//   'BOYISD12': { x: 1210, y: 10, width: 12, height: 17 },
 
-// // DEPTH CONTOUR LABELS
-// {
-//   id: 'enc-depcnt-labels',
-//   type: 'symbol',
-//   source: 'active-basemap',
-//   'source-layer': 'depcnt_lines',
-//   minzoom: 11,
-//   layout: {
-//     'text-field': ['to-string', ['coalesce', ['get', 'valdco'], ['get', 'depth'], '']],
-//     'text-font': ['Open Sans Regular', 'Arial Unicode MS Regular'],
-//     'text-size': 10,
-//     'symbol-placement': 'line',
-//     'text-rotation-alignment': 'map',
-//     'text-pitch-alignment': 'viewport'
-//   },
-//   paint: {
-//     'text-color': '#1e40af',      // DEPDW text
-//     'text-halo-color': '#ffffff', // white halo
-//     'text-halo-width': 1.5
-//   }
-// },
+//   // Beacons - Lateral (7 symbols)
+//   'BCNLAT15': { x: 662, y: 10, width: 7, height: 13 },
+//   'BCNLAT16': { x: 679, y: 10, width: 7, height: 13 },
+//   'BCNLAT21': { x: 696, y: 10, width: 5, height: 15 },
+//   'BCNLAT22': { x: 711, y: 10, width: 5, height: 15 },
+//   'BCNLAT23': { x: 146, y: 495, width: 8, height: 22 },
+//   'BCNLAT50': { x: 10, y: 742, width: 7, height: 14 },
+//   'BCNLAT24': { x: 873, y: 814, width: 8, height: 22 },
 
-// COASTLINE (COALNE)
-{
-  id: 'enc-coastline-lines',
-  type: 'line',
-  source: 'active-basemap',
-  'source-layer': 'coalne_lines',
-  paint: {
-    'line-color': '#6B4423',  // CSTLN S-52 value
-    'line-width': 1.5
-  }
-},
+//   // Beacons - Special Purpose (2 symbols)
+//   'BCNSPP13': { x: 783, y: 10, width: 7, height: 13 },
+//   'BCNSPP21': { x: 800, y: 10, width: 5, height: 15 },
 
-// Red lateral buoys
-// Show ALL boylat without any filter - NO PURPLE, just show them as-is
-{
-  id: 'enc-boylat-all',
-  type: 'circle',
-  source: 'active-basemap',
-  'source-layer': 'boylat',
-  paint: {
-    'circle-radius': 8,
-    'circle-color': '#FF0000',  // Make them RED
-    'circle-stroke-color': '#FFFFFF',
-    'circle-stroke-width': 2
-  }
-  // NO FILTER - shows ALL boylat
-},
+//   // Beacons - Cardinal (4 symbols)
+//   'BCNCAR01': { x: 478, y: 10, width: 13, height: 19 },
+//   'BCNCAR02': { x: 501, y: 10, width: 13, height: 20 },
+//   'BCNCAR03': { x: 524, y: 10, width: 13, height: 19 },
+//   'BCNCAR04': { x: 547, y: 10, width: 13, height: 19 },
 
-// Show ALL boyspp without any filter
-{
-  id: 'enc-boyspp-all',
-  type: 'circle',
-  source: 'active-basemap',
-  'source-layer': 'boyspp',
-  paint: {
-    'circle-radius': 8,
-    'circle-color': '#FFFF00',  // Make them YELLOW
-    'circle-stroke-color': '#000000',
-    'circle-stroke-width': 2
-  }
-  // NO FILTER - shows ALL boyspp
-},
+//   // Beacons - Isolated Danger (1 symbols)
+//   'BCNISD21': { x: 644, y: 10, width: 8, height: 17 },
 
-// Show ALL boysaw without any filter (just in case)
-{
-  id: 'enc-boysaw-all',
-  type: 'circle',
-  source: 'active-basemap',
-  'source-layer': 'boysaw',
-  paint: {
-    'circle-radius': 8,
-    'circle-color': '#00FFFF',  // Make them CYAN
-    'circle-stroke-color': '#000000',
-    'circle-stroke-width': 2
-  }
-  // NO FILTER - shows ALL boysaw
-},
-// BUOY LABELS - for boylat (red buoys)
-{
-  id: 'enc-boylat-labels',
-  type: 'symbol',
-  source: 'active-basemap',
-  'source-layer': 'boylat',
-  minzoom: 10,  // Start showing earlier
-  layout: {
-    'text-field': ['get', 'objnam'],
-    'text-size': 12,
-    'text-anchor': 'top',
-    'text-offset': [0, 1.2],
-    'text-allow-overlap': true,  // Force show even with overlap
-    'symbol-placement': 'point'
-  },
-  paint: {
-    'text-color': '#000000',
-    'text-halo-color': '#FFFFFF',
-    'text-halo-width': 3
-  }
-},
+//   // Lights (13 symbols)
+//   'LIGHTS11': { x: 247, y: 175, width: 22, height: 22 },
+//   'LIGHTS12': { x: 278, y: 205, width: 22, height: 22 },
+//   'LIGHTS13': { x: 278, y: 175, width: 22, height: 22 },
+//   'LIGHTS81': { x: 307, y: 175, width: 12, height: 9 },
+//   'LIGHTS82': { x: 329, y: 175, width: 18, height: 10 },
+//   'LIGHTS14': { x: 349, y: 358, width: 10, height: 24 },
+//   'LIGHTS95': { x: 674, y: 358, width: 35, height: 35 },
+//   'LIGHTS94': { x: 719, y: 358, width: 47, height: 47 },
+//   'LIGHTS96': { x: 776, y: 358, width: 41, height: 41 },
+//   'LIGHTS90': { x: 827, y: 358, width: 35, height: 35 },
+//   'LIGHTS91': { x: 872, y: 358, width: 33, height: 33 },
+//   'LIGHTS92': { x: 915, y: 358, width: 21, height: 21 },
+//   'LIGHTS93': { x: 946, y: 358, width: 27, height: 27 },
 
-// BUOY LABELS - for boyspp (yellow buoys)
-{
-  id: 'enc-boyspp-labels',
-  type: 'symbol',
-  source: 'active-basemap',
-  'source-layer': 'boyspp',
-  minzoom: 10,
-  layout: {
-    'text-field': ['get', 'objnam'],
-    'text-size': 12,
-    'text-anchor': 'top',
-    'text-offset': [0, 1.2],
-    'text-allow-overlap': true,
-    'symbol-placement': 'point'
-  },
-  paint: {
-    'text-color': '#000000',
-    'text-halo-color': '#FFFFFF',
-    'text-halo-width': 3
-  }
-},
+//   // Anchorage Areas (6 symbols)
+//   'ACHARE02': { x: 10, y: 10, width: 13, height: 16 },
+//   'ACHARE51': { x: 373, y: 415, width: 25, height: 29 },
+//   'ACHBRT07': { x: 79, y: 10, width: 16, height: 16 },
+//   'ACHRES51': { x: 105, y: 10, width: 36, height: 38 },
+//   'ACHRES61': { x: 151, y: 10, width: 42, height: 38 },
+//   'ACHRES71': { x: 203, y: 10, width: 43, height: 38 },
 
-// BUOY LABELS - for boysaw (cyan buoys)
-{
-  id: 'enc-boysaw-labels',
-  type: 'symbol',
-  source: 'active-basemap',
-  'source-layer': 'boysaw',
-  minzoom: 10,
-  layout: {
-    'text-field': ['get', 'objnam'],
-    'text-size': 12,
-    'text-anchor': 'top',
-    'text-offset': [0, 1.2],
-    'text-allow-overlap': true,
-    'symbol-placement': 'point'
-  },
-  paint: {
-    'text-color': '#000000',
-    'text-halo-color': '#FFFFFF',
-    'text-halo-width': 3
-  }
-},
+//   // Obstructions (7 symbols)
+//   'OBSTRN01': { x: 831, y: 175, width: 13, height: 13 },
+//   'OBSTRN02': { x: 854, y: 175, width: 13, height: 13 },
+//   'OBSTRN03': { x: 877, y: 175, width: 13, height: 13 },
+//   'OBSTRN18': { x: 900, y: 175, width: 7, height: 7 },
+//   'UWTROC03': { x: 950, y: 307, width: 13, height: 13 },
+//   'UWTROC04': { x: 973, y: 307, width: 13, height: 11 },
+//   'OBSTRN11': { x: 387, y: 358, width: 9, height: 9 },
 
- // BEACONS (BCNLAT, BCNSPP)
-    {
-      id: 'enc-bcnlat',
-      type: 'circle',
-      source: 'active-basemap',
-      'source-layer': 'bcnlat',
-      paint: {
-        'circle-radius': 6,
-        'circle-color': '#FF0000', // Red lateral
-        'circle-stroke-color': '#000000',
-        'circle-stroke-width': 1
-      }
-    },
-    {
-      id: 'enc-bcnspp',
-      type: 'circle',
-      source: 'active-basemap',
-      'source-layer': 'bcnspp',
-      paint: {
-        'circle-radius': 6,
-        'circle-color': '#FFFF00', // Yellow special
-        'circle-stroke-color': '#000000',
-        'circle-stroke-width': 1
-      }
-    },
+//   // Wrecks (4 symbols)
+//   'WRECKS01': { x: 1439, y: 307, width: 20, height: 11 },
+//   'WRECKS04': { x: 10, y: 358, width: 15, height: 10 },
+//   'WRECKS05': { x: 35, y: 358, width: 19, height: 13 },
+//   'WRECKS07': { x: 563, y: 946, width: 29, height: 1 },
 
-     // BEACON LABELS
-    {
-      id: 'enc-beacon-labels',
-      type: 'symbol',
-      source: 'active-basemap',
-      'source-layer': 'bcnlat',
-      minzoom: 12,
-      layout: {
-        'text-field': ['coalesce', ['get', 'objnam'], ['get', 'name'], ''],
-        'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
-        'text-size': 10,
-        'text-anchor': 'top',
-        'text-offset': [0, 0.8],
-        'text-allow-overlap': false
-      },
-      paint: {
-        'text-color': '#000000',
-        'text-halo-color': '#FFFFFF',
-        'text-halo-width': 2
-      }
-    },
+//   // Soundings (63 symbols)
+//   'SOUNDG00': { x: 690, y: 415, width: 6, height: 10 },
+//   'SOUNDG01': { x: 706, y: 415, width: 4, height: 10 },
+//   'SOUNDG02': { x: 720, y: 415, width: 6, height: 10 },
+//   'SOUNDG03': { x: 736, y: 415, width: 6, height: 10 },
+//   'SOUNDG04': { x: 752, y: 415, width: 6, height: 10 },
+//   'SOUNDG05': { x: 768, y: 415, width: 6, height: 10 },
+//   'SOUNDG06': { x: 784, y: 415, width: 6, height: 10 },
+//   'SOUNDG07': { x: 800, y: 415, width: 6, height: 10 },
+//   'SOUNDG08': { x: 816, y: 415, width: 6, height: 10 },
+//   'SOUNDG09': { x: 832, y: 415, width: 6, height: 10 },
+//   'SOUNDG10': { x: 848, y: 415, width: 6, height: 10 },
+//   'SOUNDG11': { x: 864, y: 415, width: 4, height: 10 },
+//   'SOUNDG12': { x: 878, y: 415, width: 6, height: 10 },
+//   'SOUNDG13': { x: 894, y: 415, width: 6, height: 10 },
+//   'SOUNDG14': { x: 910, y: 415, width: 6, height: 10 },
+//   'SOUNDG15': { x: 926, y: 415, width: 6, height: 10 },
+//   'SOUNDG16': { x: 942, y: 415, width: 6, height: 10 },
+//   'SOUNDG17': { x: 958, y: 415, width: 6, height: 10 },
+//   'SOUNDG18': { x: 974, y: 415, width: 6, height: 10 },
+//   'SOUNDG19': { x: 990, y: 415, width: 6, height: 10 },
+//   'SOUNDG20': { x: 1006, y: 415, width: 6, height: 10 },
+//   'SOUNDG21': { x: 1022, y: 415, width: 4, height: 10 },
+//   'SOUNDG22': { x: 1036, y: 415, width: 6, height: 10 },
+//   'SOUNDG23': { x: 1052, y: 415, width: 6, height: 10 },
+//   'SOUNDG24': { x: 1068, y: 415, width: 6, height: 10 },
+//   'SOUNDG25': { x: 1084, y: 415, width: 6, height: 10 },
+//   'SOUNDG26': { x: 1100, y: 415, width: 6, height: 10 },
+//   'SOUNDG27': { x: 1116, y: 415, width: 6, height: 10 },
+//   'SOUNDG28': { x: 1132, y: 415, width: 6, height: 10 },
+//   'SOUNDG29': { x: 1148, y: 415, width: 6, height: 10 },
+//   'SOUNDG30': { x: 1164, y: 415, width: 6, height: 10 },
+//   'SOUNDG31': { x: 1180, y: 415, width: 4, height: 10 },
+//   'SOUNDG32': { x: 1194, y: 415, width: 6, height: 10 },
+//   'SOUNDG33': { x: 1210, y: 415, width: 6, height: 10 },
+//   'SOUNDG34': { x: 1226, y: 415, width: 6, height: 10 },
+//   'SOUNDG35': { x: 1242, y: 415, width: 6, height: 10 },
+//   'SOUNDG36': { x: 1258, y: 415, width: 6, height: 10 },
+//   'SOUNDG37': { x: 1274, y: 415, width: 6, height: 10 },
+//   'SOUNDG38': { x: 1290, y: 415, width: 6, height: 10 },
+//   'SOUNDG39': { x: 1306, y: 415, width: 6, height: 10 },
+//   'SOUNDG40': { x: 1322, y: 415, width: 6, height: 10 },
+//   'SOUNDG41': { x: 1338, y: 415, width: 4, height: 10 },
+//   'SOUNDG42': { x: 1352, y: 415, width: 6, height: 10 },
+//   'SOUNDG43': { x: 1368, y: 415, width: 6, height: 10 },
+//   'SOUNDG44': { x: 1384, y: 415, width: 6, height: 10 },
+//   'SOUNDG45': { x: 1400, y: 415, width: 6, height: 10 },
+//   'SOUNDG46': { x: 1416, y: 415, width: 6, height: 10 },
+//   'SOUNDG47': { x: 1432, y: 415, width: 6, height: 10 },
+//   'SOUNDG48': { x: 1448, y: 415, width: 6, height: 10 },
+//   'SOUNDG49': { x: 1464, y: 415, width: 6, height: 10 },
+//   'SOUNDG50': { x: 10, y: 454, width: 6, height: 10 },
+//   'SOUNDG51': { x: 26, y: 454, width: 4, height: 10 },
+//   'SOUNDG52': { x: 40, y: 454, width: 6, height: 10 },
+//   'SOUNDG53': { x: 56, y: 454, width: 6, height: 10 },
+//   'SOUNDG54': { x: 72, y: 454, width: 6, height: 10 },
+//   'SOUNDG55': { x: 88, y: 454, width: 6, height: 10 },
+//   'SOUNDG56': { x: 104, y: 454, width: 6, height: 10 },
+//   'SOUNDG57': { x: 120, y: 454, width: 6, height: 10 },
+//   'SOUNDG58': { x: 136, y: 454, width: 6, height: 10 },
+//   'SOUNDG59': { x: 152, y: 454, width: 6, height: 10 },
+//   'SOUNDGA1': { x: 168, y: 454, width: 8, height: 2 },
+//   'SOUNDGB1': { x: 186, y: 454, width: 23, height: 5 },
+//   'SOUNDGC2': { x: 219, y: 454, width: 29, height: 29 },
 
+//   // Other Features (890 symbols)
+//   'AIRARE02': { x: 256, y: 10, width: 24, height: 24 },
+//   'AISDEF01': { x: 290, y: 10, width: 17, height: 23 },
+//   'AISONE01': { x: 317, y: 10, width: 13, height: 6 },
+//   'AISSIX01': { x: 340, y: 10, width: 13, height: 7 },
+//   'AISSLP01': { x: 363, y: 10, width: 9, height: 23 },
+//   'AISVES01': { x: 382, y: 10, width: 15, height: 37 },
+//   'ARPATG01': { x: 407, y: 10, width: 15, height: 15 },
+//   'ARPONE01': { x: 432, y: 10, width: 13, height: 2 },
+//   'ARPSIX01': { x: 455, y: 10, width: 13, height: 2 },
+//   'BCNDEF13': { x: 570, y: 10, width: 16, height: 14 },
+//   'BCNGEN01': { x: 147, y: 415, width: 10, height: 18 },
+//   'BCNGEN03': { x: 616, y: 10, width: 18, height: 16 },
+//   'BCNLTC01': { x: 802, y: 742, width: 15, height: 18 },
+//   'BCNSAW13': { x: 751, y: 10, width: 7, height: 13 },
+//   'BCNSAW21': { x: 768, y: 10, width: 5, height: 15 },
+//   'BCNSTK02': { x: 527, y: 742, width: 8, height: 16 },
+//   'BCNTOW01': { x: 243, y: 742, width: 15, height: 18 },
+//   'BLKADJ01': { x: 858, y: 10, width: 58, height: 58 },
+//   'BOYBAR01': { x: 1224, y: 742, width: 24, height: 15 },
+//   'BOYCAN01': { x: 955, y: 10, width: 19, height: 12 },
+//   'BOYCON01': { x: 175, y: 778, width: 19, height: 16 },
+//   'BOYDEF03': { x: 1109, y: 10, width: 22, height: 14 },
+//   'BOYGEN03': { x: 1319, y: 742, width: 20, height: 17 },
+//   'BOYINB01': { x: 1174, y: 10, width: 26, height: 15 },
+//   'BOYMOR01': { x: 240, y: 778, width: 24, height: 18 },
+//   'BOYMOR03': { x: 274, y: 778, width: 19, height: 15 },
+//   'BOYMOR11': { x: 1390, y: 10, width: 23, height: 11 },
+//   'BOYPIL01': { x: 1039, y: 358, width: 18, height: 18 },
+//   'BOYSPH01': { x: 1290, y: 742, width: 19, height: 15 },
+//   'BOYSPR01': { x: 379, y: 778, width: 10, height: 18 },
+//   'BOYSUP01': { x: 45, y: 778, width: 25, height: 16 },
+//   'BOYSUP02': { x: 80, y: 778, width: 25, height: 16 },
+//   'BOYSUP03': { x: 303, y: 778, width: 25, height: 16 },
+//   'BRIDGE01': { x: 235, y: 78, width: 13, height: 13 },
+//   'BRTHNO01': { x: 258, y: 78, width: 21, height: 21 },
+//   'BUAARE02': { x: 289, y: 78, width: 16, height: 16 },
+//   'BUIREL01': { x: 315, y: 78, width: 13, height: 13 },
+//   'BUIREL04': { x: 338, y: 78, width: 18, height: 9 },
+//   'BUIREL05': { x: 366, y: 78, width: 11, height: 15 },
+//   'BUIREL13': { x: 387, y: 78, width: 13, height: 13 },
+//   'BUIREL14': { x: 410, y: 78, width: 18, height: 9 },
+//   'BUIREL15': { x: 438, y: 78, width: 11, height: 14 },
+//   'BUISGL01': { x: 459, y: 78, width: 9, height: 9 },
+//   'BUISGL11': { x: 478, y: 78, width: 9, height: 9 },
+//   'CAIRNS01': { x: 399, y: 778, width: 18, height: 17 },
+//   'CAIRNS11': { x: 522, y: 78, width: 15, height: 15 },
+//   'CBLARE51': { x: 547, y: 78, width: 12, height: 33 },
+//   'CGUSTA02': { x: 569, y: 78, width: 21, height: 15 },
+//   'CHCRDEL1': { x: 600, y: 78, width: 24, height: 24 },
+//   'CHCRID01': { x: 634, y: 78, width: 4, height: 18 },
+//   'CHIMNY01': { x: 648, y: 78, width: 15, height: 20 },
+//   'CHIMNY11': { x: 673, y: 78, width: 15, height: 20 },
+//   'CHINFO06': { x: 698, y: 78, width: 16, height: 16 },
+//   'CHINFO07': { x: 724, y: 78, width: 15, height: 15 },
+//   'CHINFO08': { x: 749, y: 78, width: 15, height: 15 },
+//   'CHINFO09': { x: 774, y: 78, width: 16, height: 16 },
+//   'CHINFO10': { x: 800, y: 78, width: 15, height: 15 },
+//   'CHINFO11': { x: 825, y: 78, width: 16, height: 16 },
+//   'CHKSYM01': { x: 851, y: 78, width: 16, height: 15 },
+//   'CLRLIN01': { x: 877, y: 78, width: 11, height: 19 },
+//   'CRANES01': { x: 898, y: 78, width: 18, height: 16 },
+//   'CTNARE51': { x: 926, y: 78, width: 29, height: 29 },
+//   'CTYARE51': { x: 965, y: 78, width: 29, height: 29 },
+//   'CTYARE71': { x: 1004, y: 78, width: 36, height: 29 },
+//   'CURDEF01': { x: 1050, y: 78, width: 30, height: 27 },
+//   'CURENT01': { x: 1090, y: 78, width: 7, height: 27 },
+//   'CURSRA01': { x: 1107, y: 78, width: 30, height: 30 },
+//   'CURSRB01': { x: 1147, y: 78, width: 30, height: 30 },
+//   'DANGER01': { x: 1187, y: 78, width: 24, height: 19 },
+//   'DANGER02': { x: 1221, y: 78, width: 24, height: 19 },
+//   'DANGER03': { x: 1255, y: 78, width: 24, height: 19 },
+//   'DAYSQR01': { x: 433, y: 358, width: 15, height: 22 },
+//   'DAYSQR21': { x: 458, y: 358, width: 15, height: 23 },
+//   'DAYTRI01': { x: 508, y: 358, width: 19, height: 23 },
+//   'DAYTRI05': { x: 537, y: 358, width: 19, height: 22 },
+//   'DAYTRI21': { x: 566, y: 358, width: 19, height: 25 },
+//   'DAYTRI25': { x: 595, y: 358, width: 19, height: 23 },
+//   'DIRBOY01': { x: 10, y: 121, width: 38, height: 25 },
+//   'DIRBOYA1': { x: 58, y: 121, width: 38, height: 25 },
+//   'DIRBOYB1': { x: 106, y: 121, width: 38, height: 25 },
+//   'DISMAR03': { x: 154, y: 121, width: 26, height: 13 },
+//   'DISMAR04': { x: 190, y: 121, width: 17, height: 13 },
+//   'DNGHILIT': { x: 217, y: 121, width: 18, height: 18 },
+//   'DOMES001': { x: 245, y: 121, width: 16, height: 13 },
+//   'DOMES011': { x: 271, y: 121, width: 16, height: 13 },
+//   'DSHAER01': { x: 297, y: 121, width: 11, height: 16 },
+//   'DSHAER11': { x: 318, y: 121, width: 11, height: 16 },
+//   'DWRTPT51': { x: 339, y: 121, width: 46, height: 28 },
+//   'DWRUTE51': { x: 395, y: 121, width: 19, height: 44 },
+//   'EBBSTR01': { x: 424, y: 121, width: 7, height: 26 },
+//   'EBLVRM11': { x: 441, y: 121, width: 7, height: 7 },
+//   'ENTRES51': { x: 458, y: 121, width: 29, height: 29 },
+//   'ENTRES61': { x: 497, y: 121, width: 35, height: 30 },
+//   'ENTRES71': { x: 542, y: 121, width: 36, height: 29 },
+//   'ERBLTIK1': { x: 588, y: 121, width: 36, height: 5 },
+//   'EVENTS02': { x: 634, y: 121, width: 13, height: 10 },
+//   'FAIRWY51': { x: 657, y: 121, width: 19, height: 40 },
+//   'FAIRWY52': { x: 686, y: 121, width: 18, height: 40 },
+//   'FLASTK01': { x: 714, y: 121, width: 10, height: 19 },
+//   'FLASTK11': { x: 734, y: 121, width: 10, height: 19 },
+//   'FLDSTR01': { x: 754, y: 121, width: 7, height: 27 },
+//   'FLGSTF01': { x: 771, y: 121, width: 10, height: 16 },
+//   'FOGSIG01': { x: 791, y: 121, width: 12, height: 13 },
+//   'FORSTC01': { x: 813, y: 121, width: 13, height: 13 },
+//   'FORSTC11': { x: 836, y: 121, width: 13, height: 13 },
+//   'FOULGND1': { x: 859, y: 121, width: 12, height: 10 },
+//   'FRYARE51': { x: 881, y: 121, width: 74, height: 10 },
+//   'FRYARE52': { x: 965, y: 121, width: 74, height: 10 },
+//   'FSHFAC02': { x: 1049, y: 121, width: 16, height: 14 },
+//   'FSHFAC03': { x: 1075, y: 121, width: 19, height: 6 },
+//   'FSHGRD01': { x: 1104, y: 121, width: 33, height: 14 },
+//   'FSHHAV01': { x: 1147, y: 121, width: 29, height: 19 },
+//   'FSHRES51': { x: 1186, y: 121, width: 30, height: 19 },
+//   'FSHRES61': { x: 1226, y: 121, width: 34, height: 19 },
+//   'FSHRES71': { x: 1270, y: 121, width: 38, height: 19 },
+//   'GATCON03': { x: 1318, y: 121, width: 21, height: 21 },
+//   'GATCON04': { x: 1349, y: 121, width: 21, height: 21 },
+//   'HILTOP01': { x: 1380, y: 121, width: 30, height: 25 },
+//   'HILTOP11': { x: 1420, y: 121, width: 30, height: 25 },
+//   'HRBFAC09': { x: 10, y: 175, width: 18, height: 18 },
+//   'HULKES01': { x: 38, y: 175, width: 15, height: 9 },
+//   'INFARE51': { x: 63, y: 175, width: 24, height: 24 },
+//   'INFORM01': { x: 97, y: 175, width: 47, height: 47 },
+//   'ISODGR01': { x: 154, y: 175, width: 21, height: 21 },
+//   'ITZARE51': { x: 185, y: 175, width: 34, height: 27 },
+//   'LIGHTDEF': { x: 247, y: 205, width: 22, height: 22 },
+//   'LITFLT01': { x: 338, y: 778, width: 31, height: 14 },
+//   'LITFLT02': { x: 394, y: 175, width: 19, height: 8 },
+//   'LITVES01': { x: 1349, y: 742, width: 31, height: 23 },
+//   'LITVES02': { x: 460, y: 175, width: 23, height: 12 },
+//   'LNDARE01': { x: 493, y: 175, width: 7, height: 7 },
+//   'LOCMAG01': { x: 510, y: 175, width: 7, height: 28 },
+//   'LOCMAG51': { x: 527, y: 175, width: 12, height: 54 },
+//   'LOWACC01': { x: 549, y: 175, width: 34, height: 37 },
+//   'MAGVAR01': { x: 593, y: 175, width: 7, height: 27 },
+//   'MAGVAR51': { x: 610, y: 175, width: 12, height: 54 },
+//   'MARCUL02': { x: 632, y: 175, width: 21, height: 13 },
+//   'MONUMT02': { x: 663, y: 175, width: 13, height: 13 },
+//   'MONUMT12': { x: 686, y: 175, width: 13, height: 13 },
+//   'MORFAC03': { x: 709, y: 175, width: 9, height: 9 },
+//   'MORFAC04': { x: 728, y: 175, width: 11, height: 16 },
+//   'MSTCON04': { x: 749, y: 175, width: 10, height: 20 },
+//   'MSTCON14': { x: 769, y: 175, width: 10, height: 20 },
+//   'NORTHAR1': { x: 789, y: 175, width: 12, height: 44 },
+//   'NOTBRD11': { x: 427, y: 778, width: 12, height: 18 },
+//   'OFSPLF01': { x: 917, y: 175, width: 13, height: 13 },
+//   'OSPONE02': { x: 940, y: 175, width: 13, height: 2 },
+//   'OSPSIX02': { x: 963, y: 175, width: 13, height: 2 },
+//   'OWNSHP01': { x: 986, y: 175, width: 29, height: 29 },
+//   'OWNSHP05': { x: 1025, y: 175, width: 13, height: 49 },
+//   'PASTRK01': { x: 1048, y: 175, width: 13, height: 2 },
+//   'PASTRK02': { x: 1071, y: 175, width: 13, height: 2 },
+//   'PILBOP02': { x: 736, y: 778, width: 17, height: 17 },
+//   'PILPNT02': { x: 1120, y: 175, width: 7, height: 7 },
+//   'PLNPOS01': { x: 1137, y: 175, width: 69, height: 28 },
+//   'PLNPOS02': { x: 1216, y: 175, width: 13, height: 2 },
+//   'PLNSPD03': { x: 1239, y: 175, width: 25, height: 18 },
+//   'PLNSPD04': { x: 1274, y: 175, width: 25, height: 18 },
+//   'POSGEN01': { x: 1309, y: 175, width: 13, height: 13 },
+//   'POSGEN03': { x: 1332, y: 175, width: 13, height: 13 },
+//   'POSGEN04': { x: 1355, y: 175, width: 7, height: 7 },
+//   'POSITN02': { x: 1372, y: 175, width: 18, height: 18 },
+//   'PRCARE12': { x: 1400, y: 175, width: 16, height: 16 },
+//   'PRCARE51': { x: 1422, y: 175, width: 31, height: 38 },
+//   'PRDINS02': { x: 10, y: 239, width: 16, height: 13 },
+//   'PRICKE03': { x: 449, y: 778, width: 13, height: 20 },
+//   'PRICKE04': { x: 472, y: 778, width: 13, height: 20 },
+//   'QUAPOS01': { x: 521, y: 415, width: 22, height: 21 },
+//   'QUARRY01': { x: 96, y: 239, width: 21, height: 21 },
+//   'QUESMRK1': { x: 127, y: 239, width: 8, height: 14 },
+//   'RACNSP01': { x: 145, y: 239, width: 19, height: 19 },
+//   'RADRFL03': { x: 174, y: 239, width: 19, height: 19 },
+//   'RASCAN01': { x: 203, y: 239, width: 13, height: 17 },
+//   'RASCAN11': { x: 226, y: 239, width: 13, height: 17 },
+//   'RCLDEF01': { x: 249, y: 239, width: 36, height: 31 },
+//   'RCTLPT52': { x: 295, y: 239, width: 18, height: 41 },
+//   'RDOCAL02': { x: 323, y: 239, width: 14, height: 22 },
+//   'RDOCAL03': { x: 347, y: 239, width: 14, height: 31 },
+//   'RDOSTA02': { x: 371, y: 239, width: 18, height: 18 },
+//   'RECDEF51': { x: 399, y: 239, width: 50, height: 14 },
+//   'RECTRC55': { x: 459, y: 239, width: 10, height: 50 },
+//   'RECTRC56': { x: 479, y: 239, width: 10, height: 44 },
+//   'RECTRC57': { x: 499, y: 239, width: 10, height: 30 },
+//   'RECTRC58': { x: 519, y: 239, width: 10, height: 36 },
+//   'REFPNT02': { x: 539, y: 239, width: 30, height: 30 },
+//   'RETRFL01': { x: 579, y: 239, width: 7, height: 11 },
+//   'RETRFL02': { x: 596, y: 239, width: 7, height: 11 },
+//   'RFNERY01': { x: 613, y: 239, width: 21, height: 21 },
+//   'RFNERY11': { x: 644, y: 239, width: 21, height: 21 },
+//   'ROLROL01': { x: 675, y: 239, width: 24, height: 10 },
+//   'RSCSTA02': { x: 1258, y: 742, width: 22, height: 21 },
+//   'RSRDEF51': { x: 732, y: 239, width: 29, height: 29 },
+//   'RTLDEF51': { x: 771, y: 239, width: 35, height: 41 },
+//   'RTPBCN02': { x: 816, y: 239, width: 20, height: 19 },
+//   'SCALEB10': { x: 846, y: 239, width: 2, height: 58 },
+//   'SCALEB11': { x: 858, y: 239, width: 2, height: 58 },
+//   'SILBUI01': { x: 870, y: 239, width: 10, height: 10 },
+//   'SILBUI11': { x: 890, y: 239, width: 10, height: 10 },
+//   'SISTAT02': { x: 910, y: 239, width: 20, height: 13 },
+//   'SMCFAC02': { x: 940, y: 239, width: 21, height: 21 },
+//   'SNDWAV02': { x: 971, y: 239, width: 35, height: 6 },
+//   'SPRING02': { x: 1016, y: 239, width: 10, height: 11 },
+//   'SWPARE51': { x: 1036, y: 239, width: 33, height: 10 },
+//   'TIDCUR01': { x: 1079, y: 239, width: 13, height: 44 },
+//   'TIDCUR02': { x: 1102, y: 239, width: 13, height: 36 },
+//   'TIDCUR03': { x: 1125, y: 239, width: 25, height: 15 },
+//   'TIDEHT01': { x: 1160, y: 239, width: 27, height: 11 },
+//   'TIDSTR01': { x: 1197, y: 239, width: 17, height: 17 },
+//   'TMARDEF1': { x: 1224, y: 239, width: 2, height: 11 },
+//   'TMARDEF2': { x: 1236, y: 239, width: 5, height: 12 },
+//   'TMBYRD01': { x: 1251, y: 239, width: 13, height: 13 },
+//   'TNKCON02': { x: 1274, y: 239, width: 9, height: 9 },
+//   'TNKCON12': { x: 1293, y: 239, width: 9, height: 9 },
+//   'TNKFRM01': { x: 1312, y: 239, width: 23, height: 23 },
+//   'TNKFRM11': { x: 1345, y: 239, width: 23, height: 23 },
+//   'TOPMAR02': { x: 1378, y: 239, width: 8, height: 6 },
+//   'TOPMAR04': { x: 1395, y: 239, width: 8, height: 6 },
+//   'TOPMAR05': { x: 1413, y: 239, width: 9, height: 13 },
+//   'TOPMAR06': { x: 1432, y: 239, width: 10, height: 12 },
+//   'TOPMAR07': { x: 1452, y: 239, width: 8, height: 13 },
+//   'TOPMAR08': { x: 10, y: 307, width: 11, height: 12 },
+//   'TOPMAR10': { x: 31, y: 307, width: 7, height: 7 },
+//   'TOPMAR12': { x: 48, y: 307, width: 8, height: 13 },
+//   'TOPMAR13': { x: 66, y: 307, width: 7, height: 8 },
+//   'TOPMAR14': { x: 83, y: 307, width: 8, height: 8 },
+//   'TOPMAR16': { x: 101, y: 307, width: 7, height: 7 },
+//   'TOPMAR17': { x: 118, y: 307, width: 13, height: 9 },
+//   'TOPMAR18': { x: 141, y: 307, width: 13, height: 9 },
+//   'TOPMAR22': { x: 164, y: 307, width: 8, height: 6 },
+//   'TOPMAR24': { x: 182, y: 307, width: 8, height: 6 },
+//   'TOPMAR25': { x: 200, y: 307, width: 8, height: 13 },
+//   'TOPMAR26': { x: 218, y: 307, width: 8, height: 13 },
+//   'TOPMAR27': { x: 236, y: 307, width: 8, height: 13 },
+//   'TOPMAR28': { x: 254, y: 307, width: 8, height: 13 },
+//   'TOPMAR30': { x: 272, y: 307, width: 8, height: 8 },
+//   'TOPMAR32': { x: 290, y: 307, width: 8, height: 15 },
+//   'TOPMAR33': { x: 308, y: 307, width: 6, height: 9 },
+//   'TOPMAR34': { x: 324, y: 307, width: 8, height: 5 },
+//   'TOPMAR36': { x: 342, y: 307, width: 9, height: 9 },
+//   'TOPMAR65': { x: 361, y: 307, width: 9, height: 8 },
+//   'TOPMAR85': { x: 380, y: 307, width: 8, height: 8 },
+//   'TOPMAR86': { x: 398, y: 307, width: 13, height: 13 },
+//   'TOPMAR87': { x: 421, y: 307, width: 9, height: 10 },
+//   'TOPMAR88': { x: 440, y: 307, width: 9, height: 10 },
+//   'TOPMAR89': { x: 459, y: 307, width: 13, height: 10 },
+//   'TOWERS01': { x: 343, y: 742, width: 14, height: 26 },
+//   'TOWERS02': { x: 763, y: 778, width: 14, height: 26 },
+//   'TOWERS03': { x: 367, y: 742, width: 14, height: 26 },
+//   'TOWERS05': { x: 391, y: 742, width: 14, height: 26 },
+//   'TOWERS12': { x: 814, y: 778, width: 14, height: 26 },
+//   'TOWERS15': { x: 838, y: 778, width: 14, height: 26 },
+//   'TREPNT04': { x: 604, y: 307, width: 12, height: 13 },
+//   'TREPNT05': { x: 626, y: 307, width: 13, height: 10 },
+//   'TSLDEF51': { x: 649, y: 307, width: 36, height: 40 },
+//   'TSSCRS51': { x: 695, y: 307, width: 29, height: 29 },
+//   'TSSLPT51': { x: 734, y: 307, width: 19, height: 40 },
+//   'TSSRON51': { x: 763, y: 307, width: 27, height: 27 },
+//   'TWRDEF51': { x: 800, y: 307, width: 40, height: 41 },
+//   'TWRTPT52': { x: 850, y: 307, width: 19, height: 41 },
+//   'TWRTPT53': { x: 879, y: 307, width: 18, height: 41 },
+//   'UNITFTH1': { x: 907, y: 307, width: 10, height: 15 },
+//   'UNITMTR1': { x: 927, y: 307, width: 13, height: 15 },
+//   'VECGND01': { x: 996, y: 307, width: 18, height: 13 },
+//   'VECGND21': { x: 1024, y: 307, width: 18, height: 13 },
+//   'VECWTR01': { x: 1052, y: 307, width: 18, height: 11 },
+//   'VECWTR21': { x: 1080, y: 307, width: 18, height: 11 },
+//   'WATTUR02': { x: 1108, y: 307, width: 44, height: 10 },
+//   'WAYPNT01': { x: 1162, y: 307, width: 19, height: 19 },
+//   'WAYPNT03': { x: 1191, y: 307, width: 19, height: 19 },
+//   'WAYPNT11': { x: 1220, y: 307, width: 19, height: 19 },
+//   'WEDKLP03': { x: 1249, y: 307, width: 30, height: 8 },
+//   'WIMCON01': { x: 1289, y: 307, width: 12, height: 20 },
+//   'WIMCON11': { x: 1311, y: 307, width: 12, height: 20 },
+//   'WNDFRM51': { x: 1333, y: 307, width: 23, height: 23 },
+//   'WNDFRM61': { x: 1366, y: 307, width: 23, height: 23 },
+//   'WNDMIL02': { x: 1399, y: 307, width: 10, height: 13 },
+//   'WNDMIL12': { x: 1419, y: 307, width: 10, height: 13 },
+//   'ACHPNT01': { x: 63, y: 358, width: 11, height: 13 },
+//   'NMKINF01': { x: 84, y: 358, width: 19, height: 13 },
+//   'NMKPRH02': { x: 113, y: 358, width: 19, height: 13 },
+//   'NMKPRH12': { x: 142, y: 358, width: 15, height: 15 },
+//   'NMKPRH13': { x: 167, y: 358, width: 15, height: 15 },
+//   'NMKRCD01': { x: 192, y: 358, width: 15, height: 15 },
+//   'NMKRCD02': { x: 217, y: 358, width: 22, height: 10 },
+//   'NMKRCD03': { x: 249, y: 358, width: 15, height: 15 },
+//   'NMKRCD04': { x: 274, y: 358, width: 15, height: 15 },
+//   'LITDEF11': { x: 369, y: 358, width: 8, height: 21 },
+//   'DAYTRI52': { x: 406, y: 358, width: 17, height: 33 },
+//   'DAYSQR51': { x: 483, y: 358, width: 15, height: 33 },
+//   'DAYTRI51': { x: 624, y: 358, width: 17, height: 33 },
+//   'DAYREC51': { x: 651, y: 358, width: 13, height: 34 },
+//   'BOYPIL78': { x: 983, y: 358, width: 18, height: 18 },
+//   'BOYPIL79': { x: 1011, y: 358, width: 18, height: 18 },
+//   'BOYPIL60': { x: 1067, y: 358, width: 18, height: 18 },
+//   'BOYPIL61': { x: 1095, y: 358, width: 18, height: 18 },
+//   'BOYPIL62': { x: 1123, y: 358, width: 18, height: 18 },
+//   'BOYPIL63': { x: 1151, y: 358, width: 18, height: 18 },
+//   'BOYPIL64': { x: 1179, y: 358, width: 18, height: 18 },
+//   'BOYPIL65': { x: 1207, y: 358, width: 18, height: 18 },
+//   'BOYPIL66': { x: 1235, y: 358, width: 18, height: 18 },
+//   'BOYPIL67': { x: 1263, y: 358, width: 18, height: 18 },
+//   'BOYPIL68': { x: 1291, y: 358, width: 18, height: 18 },
+//   'BOYPIL69': { x: 1319, y: 358, width: 18, height: 18 },
+//   'BOYPIL70': { x: 1347, y: 358, width: 18, height: 18 },
+//   'BOYPIL71': { x: 1375, y: 358, width: 18, height: 18 },
+//   'BOYPIL72': { x: 1403, y: 358, width: 18, height: 18 },
+//   'BOYPIL73': { x: 1431, y: 358, width: 18, height: 18 },
+//   'BOYPIL74': { x: 10, y: 415, width: 18, height: 18 },
+//   'BOYPIL75': { x: 38, y: 415, width: 18, height: 18 },
+//   'BOYPIL76': { x: 66, y: 415, width: 18, height: 18 },
+//   'BOYPIL77': { x: 94, y: 415, width: 18, height: 18 },
+//   'BCNTOW68': { x: 122, y: 415, width: 15, height: 18 },
+//   'BOYCON60': { x: 167, y: 415, width: 19, height: 16 },
+//   'BOYCON61': { x: 196, y: 415, width: 19, height: 16 },
+//   'BOYCON62': { x: 225, y: 415, width: 19, height: 16 },
+//   'BOYCAN61': { x: 254, y: 415, width: 19, height: 15 },
+//   'BOYCAN62': { x: 283, y: 415, width: 19, height: 15 },
+//   'BOYCAN63': { x: 312, y: 415, width: 19, height: 15 },
+//   'RESTRN51': { x: 341, y: 415, width: 22, height: 26 },
+//   'ACHPNT02': { x: 408, y: 415, width: 25, height: 29 },
+//   'DANGER51': { x: 443, y: 415, width: 29, height: 21 },
+//   'DANGER52': { x: 482, y: 415, width: 29, height: 21 },
+//   'QUAPOS02': { x: 553, y: 415, width: 22, height: 21 },
+//   'QUAPOS03': { x: 585, y: 415, width: 26, height: 21 },
+//   'ISODGR51': { x: 621, y: 415, width: 19, height: 19 },
+//   'BOYSPR04': { x: 650, y: 415, width: 10, height: 18 },
+//   'BOYSPR05': { x: 670, y: 415, width: 10, height: 18 },
+//   'STARPT01': { x: 258, y: 454, width: 24, height: 24 },
+//   'SOUNDS00': { x: 292, y: 454, width: 6, height: 10 },
+//   'SOUNDS01': { x: 308, y: 454, width: 4, height: 10 },
+//   'SOUNDS02': { x: 322, y: 454, width: 6, height: 10 },
+//   'SOUNDS03': { x: 338, y: 454, width: 6, height: 10 },
+//   'SOUNDS04': { x: 354, y: 454, width: 6, height: 10 },
+//   'SOUNDS05': { x: 370, y: 454, width: 6, height: 10 },
+//   'SOUNDS06': { x: 386, y: 454, width: 6, height: 10 },
+//   'SOUNDS07': { x: 402, y: 454, width: 6, height: 10 },
+//   'SOUNDS08': { x: 418, y: 454, width: 6, height: 10 },
+//   'SOUNDS09': { x: 434, y: 454, width: 6, height: 10 },
+//   'SOUNDS10': { x: 450, y: 454, width: 6, height: 10 },
+//   'SOUNDS11': { x: 466, y: 454, width: 4, height: 10 },
+//   'SOUNDS12': { x: 480, y: 454, width: 6, height: 10 },
+//   'SOUNDS13': { x: 496, y: 454, width: 6, height: 10 },
+//   'SOUNDS14': { x: 512, y: 454, width: 6, height: 10 },
+//   'SOUNDS15': { x: 528, y: 454, width: 6, height: 10 },
+//   'SOUNDS16': { x: 544, y: 454, width: 6, height: 10 },
+//   'SOUNDS17': { x: 560, y: 454, width: 6, height: 10 },
+//   'SOUNDS18': { x: 576, y: 454, width: 6, height: 10 },
+//   'SOUNDS19': { x: 592, y: 454, width: 6, height: 10 },
+//   'SOUNDS20': { x: 608, y: 454, width: 6, height: 10 },
+//   'SOUNDS21': { x: 624, y: 454, width: 4, height: 10 },
+//   'SOUNDS22': { x: 638, y: 454, width: 6, height: 10 },
+//   'SOUNDS23': { x: 654, y: 454, width: 6, height: 10 },
+//   'SOUNDS24': { x: 670, y: 454, width: 6, height: 10 },
+//   'SOUNDS25': { x: 686, y: 454, width: 6, height: 10 },
+//   'SOUNDS26': { x: 702, y: 454, width: 6, height: 10 },
+//   'SOUNDS27': { x: 718, y: 454, width: 6, height: 10 },
+//   'SOUNDS28': { x: 734, y: 454, width: 6, height: 10 },
+//   'SOUNDS29': { x: 750, y: 454, width: 6, height: 10 },
+//   'SOUNDS30': { x: 766, y: 454, width: 6, height: 10 },
+//   'SOUNDS31': { x: 782, y: 454, width: 4, height: 10 },
+//   'SOUNDS32': { x: 796, y: 454, width: 6, height: 10 },
+//   'SOUNDS33': { x: 812, y: 454, width: 6, height: 10 },
+//   'SOUNDS34': { x: 828, y: 454, width: 6, height: 10 },
+//   'SOUNDS35': { x: 844, y: 454, width: 6, height: 10 },
+//   'SOUNDS36': { x: 860, y: 454, width: 6, height: 10 },
+//   'SOUNDS37': { x: 876, y: 454, width: 6, height: 10 },
+//   'SOUNDS38': { x: 892, y: 454, width: 6, height: 10 },
+//   'SOUNDS39': { x: 908, y: 454, width: 6, height: 10 },
+//   'SOUNDS40': { x: 924, y: 454, width: 6, height: 10 },
+//   'SOUNDS41': { x: 940, y: 454, width: 4, height: 10 },
+//   'SOUNDS42': { x: 954, y: 454, width: 6, height: 10 },
+//   'SOUNDS43': { x: 970, y: 454, width: 6, height: 10 },
+//   'SOUNDS44': { x: 986, y: 454, width: 6, height: 10 },
+//   'SOUNDS45': { x: 1002, y: 454, width: 6, height: 10 },
+//   'SOUNDS46': { x: 1018, y: 454, width: 6, height: 10 },
+//   'SOUNDS47': { x: 1034, y: 454, width: 6, height: 10 },
+//   'SOUNDS48': { x: 1050, y: 454, width: 6, height: 10 },
+//   'SOUNDS49': { x: 1066, y: 454, width: 6, height: 10 },
+//   'SOUNDS50': { x: 1082, y: 454, width: 6, height: 10 },
+//   'SOUNDS51': { x: 1098, y: 454, width: 4, height: 10 },
+//   'SOUNDS52': { x: 1112, y: 454, width: 6, height: 10 },
+//   'SOUNDS53': { x: 1128, y: 454, width: 6, height: 10 },
+//   'SOUNDS54': { x: 1144, y: 454, width: 6, height: 10 },
+//   'SOUNDS55': { x: 1160, y: 454, width: 6, height: 10 },
+//   'SOUNDS56': { x: 1176, y: 454, width: 6, height: 10 },
+//   'SOUNDS57': { x: 1192, y: 454, width: 6, height: 10 },
+//   'SOUNDS58': { x: 1208, y: 454, width: 6, height: 10 },
+//   'SOUNDS59': { x: 1224, y: 454, width: 6, height: 10 },
+//   'ADDMRK01': { x: 1240, y: 454, width: 17, height: 31 },
+//   'ADDMRK02': { x: 1267, y: 454, width: 17, height: 31 },
+//   'ADDMRK03': { x: 1294, y: 454, width: 31, height: 11 },
+//   'ADDMRK04': { x: 1335, y: 454, width: 31, height: 11 },
+//   'ADDMRK05': { x: 1376, y: 454, width: 31, height: 11 },
+//   'ADDMRK06': { x: 1417, y: 454, width: 31, height: 11 },
+//   'ADDMRK07': { x: 10, y: 495, width: 17, height: 31 },
+//   'ADDMRK08': { x: 37, y: 495, width: 17, height: 31 },
+//   'ADDMRK09': { x: 64, y: 495, width: 31, height: 16 },
+//   'ADDMRK10': { x: 105, y: 495, width: 31, height: 16 },
+//   'BCNSTK03': { x: 164, y: 495, width: 7, height: 14 },
+//   'BORDER01': { x: 181, y: 495, width: 20, height: 24 },
+//   'BUNSTA01': { x: 278, y: 495, width: 16, height: 19 },
+//   'BUNSTA02': { x: 304, y: 495, width: 14, height: 22 },
+//   'BUNSTA03': { x: 328, y: 495, width: 21, height: 19 },
+//   'CATHAF01': { x: 359, y: 495, width: 27, height: 27 },
+//   'CATHAF02': { x: 396, y: 495, width: 27, height: 27 },
+//   'CATHAF04': { x: 433, y: 495, width: 27, height: 27 },
+//   'CUSTOM01': { x: 470, y: 495, width: 17, height: 17 },
+//   'DISMAR05': { x: 497, y: 495, width: 7, height: 7 },
+//   'DISMAR06': { x: 514, y: 495, width: 11, height: 11 },
+//   'HECMTR01': { x: 535, y: 495, width: 7, height: 7 },
+//   'HECMTR02': { x: 552, y: 495, width: 9, height: 9 },
+//   'HGWTMK01': { x: 571, y: 495, width: 21, height: 34 },
+//   'HRBFAC10': { x: 602, y: 495, width: 19, height: 19 },
+//   'HRBFAC11': { x: 631, y: 495, width: 19, height: 19 },
+//   'HRBFAC12': { x: 660, y: 495, width: 19, height: 19 },
+//   'HRBFAC13': { x: 689, y: 495, width: 18, height: 23 },
+//   'HRBFAC14': { x: 717, y: 495, width: 19, height: 19 },
+//   'HRBFAC15': { x: 746, y: 495, width: 19, height: 19 },
+//   'HRBFAC16': { x: 775, y: 495, width: 19, height: 19 },
+//   'HRBFAC17': { x: 804, y: 495, width: 19, height: 19 },
+//   'HRBFAC18': { x: 833, y: 495, width: 19, height: 19 },
+//   'NMKINF02': { x: 862, y: 495, width: 31, height: 31 },
+//   'NMKINF03': { x: 903, y: 495, width: 45, height: 31 },
+//   'NMKINF04': { x: 958, y: 495, width: 45, height: 31 },
+//   'NMKINF05': { x: 1013, y: 495, width: 45, height: 31 },
+//   'NMKINF19': { x: 1068, y: 495, width: 31, height: 45 },
+//   'NMKINF22': { x: 1109, y: 495, width: 31, height: 31 },
+//   'NMKINF23': { x: 1150, y: 495, width: 31, height: 31 },
+//   'NMKINF24': { x: 1191, y: 495, width: 31, height: 31 },
+//   'NMKINF25': { x: 1232, y: 495, width: 31, height: 31 },
+//   'NMKINF28': { x: 1273, y: 495, width: 31, height: 31 },
+//   'NMKINF29': { x: 1314, y: 495, width: 31, height: 31 },
+//   'NMKINF30': { x: 1355, y: 495, width: 31, height: 31 },
+//   'NMKINF31': { x: 1396, y: 495, width: 31, height: 31 },
+//   'NMKINF32': { x: 1437, y: 495, width: 31, height: 31 },
+//   'NMKINF33': { x: 10, y: 550, width: 31, height: 31 },
+//   'NMKINF34': { x: 51, y: 550, width: 31, height: 31 },
+//   'NMKINF35': { x: 92, y: 550, width: 31, height: 31 },
+//   'NMKINF36': { x: 133, y: 550, width: 31, height: 31 },
+//   'NMKINF37': { x: 174, y: 550, width: 31, height: 31 },
+//   'NMKINF38': { x: 215, y: 550, width: 31, height: 45 },
+//   'NMKINF39': { x: 256, y: 550, width: 31, height: 31 },
+//   'NMKINF40': { x: 297, y: 550, width: 31, height: 31 },
+//   'NMKINF41': { x: 338, y: 550, width: 31, height: 31 },
+//   'NMKINF42': { x: 379, y: 550, width: 31, height: 31 },
+//   'NMKINF43': { x: 420, y: 550, width: 31, height: 31 },
+//   'NMKINF44': { x: 461, y: 550, width: 31, height: 31 },
+//   'NMKINF45': { x: 502, y: 550, width: 31, height: 31 },
+//   'NMKINF46': { x: 543, y: 550, width: 31, height: 31 },
+//   'NMKINF47': { x: 584, y: 550, width: 31, height: 31 },
+//   'NMKINF48': { x: 625, y: 550, width: 31, height: 31 },
+//   'NMKINF49': { x: 666, y: 550, width: 31, height: 31 },
+//   'NMKINF50': { x: 707, y: 550, width: 31, height: 31 },
+//   'NMKINF51': { x: 748, y: 550, width: 31, height: 31 },
+//   'NMKINF52': { x: 789, y: 550, width: 31, height: 31 },
+//   'NMKINF53': { x: 830, y: 550, width: 31, height: 31 },
+//   'NMKINF54': { x: 871, y: 550, width: 31, height: 31 },
+//   'NMKINF55': { x: 912, y: 550, width: 31, height: 31 },
+//   'NMKPRH01': { x: 953, y: 550, width: 31, height: 31 },
+//   'NMKPRH04': { x: 994, y: 550, width: 31, height: 45 },
+//   'NMKPRH05': { x: 1035, y: 550, width: 31, height: 45 },
+//   'NMKPRH06': { x: 1076, y: 550, width: 31, height: 45 },
+//   'NMKPRH08': { x: 1117, y: 550, width: 31, height: 45 },
+//   'NMKPRH10': { x: 1158, y: 550, width: 31, height: 31 },
+//   'NMKPRH11': { x: 1199, y: 550, width: 31, height: 31 },
+//   'NMKPRH14': { x: 1240, y: 550, width: 31, height: 31 },
+//   'NMKPRH15': { x: 1281, y: 550, width: 31, height: 31 },
+//   'NMKPRH16': { x: 1322, y: 550, width: 31, height: 31 },
+//   'NMKPRH17': { x: 1363, y: 550, width: 31, height: 31 },
+//   'NMKPRH18': { x: 1404, y: 550, width: 31, height: 31 },
+//   'NMKPRH19': { x: 10, y: 605, width: 31, height: 31 },
+//   'NMKPRH20': { x: 51, y: 605, width: 31, height: 31 },
+//   'NMKPRH21': { x: 92, y: 605, width: 31, height: 31 },
+//   'NMKPRH22': { x: 133, y: 605, width: 31, height: 31 },
+//   'NMKRCD05': { x: 174, y: 605, width: 45, height: 31 },
+//   'NMKRCD06': { x: 229, y: 605, width: 45, height: 31 },
+//   'NMKREG01': { x: 284, y: 605, width: 31, height: 31 },
+//   'NMKREG02': { x: 325, y: 605, width: 45, height: 31 },
+//   'NMKREG03': { x: 380, y: 605, width: 45, height: 31 },
+//   'NMKREG04': { x: 435, y: 605, width: 31, height: 45 },
+//   'NMKREG05': { x: 476, y: 605, width: 31, height: 45 },
+//   'NMKREG06': { x: 517, y: 605, width: 31, height: 45 },
+//   'NMKREG07': { x: 558, y: 605, width: 31, height: 45 },
+//   'NMKREG08': { x: 599, y: 605, width: 31, height: 45 },
+//   'NMKREG09': { x: 640, y: 605, width: 31, height: 45 },
+//   'NMKREG10': { x: 681, y: 605, width: 31, height: 31 },
+//   'NMKREG11': { x: 722, y: 605, width: 31, height: 31 },
+//   'NMKREG12': { x: 763, y: 605, width: 31, height: 31 },
+//   'NMKREG13': { x: 804, y: 605, width: 31, height: 31 },
+//   'NMKREG14': { x: 845, y: 605, width: 31, height: 31 },
+//   'NMKREG15': { x: 886, y: 605, width: 31, height: 31 },
+//   'NMKREG16': { x: 927, y: 605, width: 31, height: 31 },
+//   'NMKREG17': { x: 968, y: 605, width: 31, height: 31 },
+//   'NMKREG18': { x: 1009, y: 605, width: 31, height: 31 },
+//   'NMKREG19': { x: 1050, y: 605, width: 45, height: 31 },
+//   'NMKREG20': { x: 1105, y: 605, width: 45, height: 31 },
+//   'NOTMRK01': { x: 1160, y: 605, width: 15, height: 15 },
+//   'NOTMRK02': { x: 1185, y: 605, width: 15, height: 15 },
+//   'NOTMRK03': { x: 1210, y: 605, width: 15, height: 15 },
+//   'PIER0001': { x: 1235, y: 605, width: 21, height: 21 },
+//   'RADHLT01': { x: 1266, y: 605, width: 17, height: 17 },
+//   'REFDMP01': { x: 1293, y: 605, width: 19, height: 24 },
+//   'SSENTR01': { x: 1322, y: 605, width: 17, height: 31 },
+//   'SSLOCK01': { x: 1349, y: 605, width: 21, height: 26 },
+//   'SSWARS01': { x: 1380, y: 605, width: 17, height: 31 },
+//   'TERMNL01': { x: 1407, y: 605, width: 27, height: 27 },
+//   'TERMNL02': { x: 10, y: 660, width: 27, height: 27 },
+//   'TERMNL03': { x: 47, y: 660, width: 27, height: 27 },
+//   'TERMNL04': { x: 84, y: 660, width: 27, height: 27 },
+//   'TERMNL05': { x: 121, y: 660, width: 27, height: 27 },
+//   'TERMNL06': { x: 158, y: 660, width: 27, height: 27 },
+//   'TERMNL07': { x: 195, y: 660, width: 27, height: 27 },
+//   'TERMNL08': { x: 232, y: 660, width: 27, height: 27 },
+//   'TERMNL09': { x: 269, y: 660, width: 27, height: 27 },
+//   'TERMNL10': { x: 306, y: 660, width: 27, height: 27 },
+//   'TERMNL11': { x: 343, y: 660, width: 27, height: 27 },
+//   'TERMNL12': { x: 380, y: 660, width: 27, height: 27 },
+//   'TERMNL13': { x: 417, y: 660, width: 27, height: 27 },
+//   'TOPMA100': { x: 454, y: 660, width: 15, height: 11 },
+//   'TOPMA101': { x: 479, y: 660, width: 15, height: 11 },
+//   'TOPMA102': { x: 504, y: 660, width: 15, height: 12 },
+//   'TOPMA103': { x: 529, y: 660, width: 15, height: 12 },
+//   'TOPMA104': { x: 554, y: 660, width: 15, height: 22 },
+//   'TOPMA105': { x: 579, y: 660, width: 15, height: 22 },
+//   'TOPMA106': { x: 604, y: 660, width: 15, height: 15 },
+//   'TOPMA107': { x: 629, y: 660, width: 15, height: 15 },
+//   'TOPMA108': { x: 654, y: 660, width: 17, height: 16 },
+//   'TOPMA109': { x: 681, y: 660, width: 17, height: 16 },
+//   'TOPMA110': { x: 708, y: 660, width: 15, height: 15 },
+//   'TOPMA111': { x: 733, y: 660, width: 17, height: 17 },
+//   'TOPMA112': { x: 760, y: 660, width: 17, height: 16 },
+//   'TOPMA113': { x: 787, y: 660, width: 17, height: 17 },
+//   'TOPMA114': { x: 814, y: 660, width: 8, height: 23 },
+//   'TOPMA115': { x: 830, y: 660, width: 8, height: 23 },
+//   'TOPMA116': { x: 850, y: 660, width: 14, height: 10 },
+//   'TOPMA117': { x: 874, y: 660, width: 13, height: 13 },
+//   'TRNBSN01': { x: 897, y: 660, width: 23, height: 23 },
+//   'CARTRF01': { x: 930, y: 660, width: 18, height: 24 },
+//   'VTCLMK01': { x: 958, y: 660, width: 8, height: 24 },
+//   'WTLVGG01': { x: 976, y: 660, width: 19, height: 26 },
+//   'WTLVGG02': { x: 1005, y: 660, width: 8, height: 24 },
+//   'NMKINF06': { x: 1023, y: 660, width: 31, height: 31 },
+//   'NMKINF07': { x: 1064, y: 660, width: 31, height: 31 },
+//   'NMKINF08': { x: 1105, y: 660, width: 31, height: 31 },
+//   'NMKINF09': { x: 1146, y: 660, width: 31, height: 31 },
+//   'NMKINF10': { x: 1187, y: 660, width: 31, height: 31 },
+//   'NMKINF11': { x: 1228, y: 660, width: 31, height: 31 },
+//   'NMKINF12': { x: 1269, y: 660, width: 31, height: 31 },
+//   'NMKINF13': { x: 1310, y: 660, width: 31, height: 31 },
+//   'NMKINF14': { x: 1351, y: 660, width: 31, height: 31 },
+//   'NMKINF15': { x: 1392, y: 660, width: 31, height: 31 },
+//   'NMKINF16': { x: 1433, y: 660, width: 31, height: 31 },
+//   'NMKINF17': { x: 10, y: 701, width: 31, height: 31 },
+//   'NMKINF18': { x: 51, y: 701, width: 31, height: 31 },
+//   'NMKINF20': { x: 92, y: 701, width: 31, height: 31 },
+//   'NMKINF21': { x: 133, y: 701, width: 31, height: 31 },
+//   'NMKINF26': { x: 174, y: 701, width: 31, height: 31 },
+//   'NMKINF27': { x: 215, y: 701, width: 31, height: 31 },
+//   'NMKPRH07': { x: 256, y: 701, width: 31, height: 31 },
+//   'BOYCAN60': { x: 297, y: 701, width: 19, height: 15 },
+//   'BOYBAR60': { x: 326, y: 701, width: 24, height: 15 },
+//   'BOYBAR61': { x: 360, y: 701, width: 24, height: 15 },
+//   'BOYBAR62': { x: 394, y: 701, width: 24, height: 15 },
+//   'BOYSPH60': { x: 428, y: 701, width: 19, height: 15 },
+//   'BOYSPH61': { x: 457, y: 701, width: 19, height: 15 },
+//   'BOYSPH62': { x: 486, y: 701, width: 19, height: 15 },
+//   'BOYCAN64': { x: 515, y: 701, width: 19, height: 15 },
+//   'BOYSPH05': { x: 544, y: 701, width: 19, height: 15 },
+//   'BOYCON64': { x: 573, y: 701, width: 19, height: 16 },
+//   'BOYSPH65': { x: 602, y: 701, width: 19, height: 15 },
+//   'BOYSPH66': { x: 631, y: 701, width: 19, height: 15 },
+//   'BOYSPH67': { x: 660, y: 701, width: 19, height: 15 },
+//   'BOYCAN68': { x: 689, y: 701, width: 19, height: 15 },
+//   'BOYCAN70': { x: 718, y: 701, width: 19, height: 15 },
+//   'BOYCAN71': { x: 747, y: 701, width: 19, height: 15 },
+//   'BOYCAN69': { x: 776, y: 701, width: 19, height: 15 },
+//   'BOYCAN72': { x: 805, y: 701, width: 19, height: 15 },
+//   'BOYCAN73': { x: 834, y: 701, width: 19, height: 15 },
+//   'BOYPIL80': { x: 863, y: 701, width: 18, height: 18 },
+//   'BOYCON66': { x: 891, y: 701, width: 19, height: 16 },
+//   'BOYCON67': { x: 920, y: 701, width: 19, height: 16 },
+//   'BOYSPH74': { x: 949, y: 701, width: 19, height: 15 },
+//   'BOYCAN74': { x: 978, y: 701, width: 19, height: 15 },
+//   'BOYCAN75': { x: 1007, y: 701, width: 19, height: 15 },
+//   'BOYCON68': { x: 1036, y: 701, width: 19, height: 16 },
+//   'BOYCAN76': { x: 1065, y: 701, width: 19, height: 15 },
+//   'BOYCON71': { x: 1094, y: 701, width: 19, height: 16 },
+//   'BOYCON72': { x: 1123, y: 701, width: 19, height: 16 },
+//   'BOYCON69': { x: 1152, y: 701, width: 19, height: 16 },
+//   'BOYCON70': { x: 1181, y: 701, width: 19, height: 16 },
+//   'BOYSUP60': { x: 1210, y: 701, width: 25, height: 16 },
+//   'BOYSUP61': { x: 1245, y: 701, width: 25, height: 16 },
+//   'BOYSUP62': { x: 1280, y: 701, width: 25, height: 16 },
+//   'BOYCON73': { x: 1315, y: 701, width: 19, height: 16 },
+//   'BOYPIL81': { x: 1344, y: 701, width: 18, height: 18 },
+//   'BOYCAN77': { x: 1372, y: 701, width: 19, height: 15 },
+//   'BOYCAN78': { x: 1401, y: 701, width: 19, height: 15 },
+//   'BOYCAN79': { x: 1430, y: 701, width: 19, height: 15 },
+//   'BOYSPR68': { x: 1459, y: 701, width: 10, height: 18 },
+//   'BOYCON77': { x: 27, y: 742, width: 19, height: 16 },
+//   'BOYSPH77': { x: 56, y: 742, width: 19, height: 15 },
+//   'BOYCON78': { x: 85, y: 742, width: 19, height: 16 },
+//   'BOYSPH75': { x: 114, y: 742, width: 19, height: 15 },
+//   'BOYSPR69': { x: 143, y: 742, width: 10, height: 18 },
+//   'BOYSPR70': { x: 163, y: 742, width: 10, height: 18 },
+//   'BOYSPR71': { x: 183, y: 742, width: 10, height: 18 },
+//   'BOYSPR62': { x: 203, y: 742, width: 10, height: 18 },
+//   'BCNSPR62': { x: 223, y: 742, width: 10, height: 18 },
+//   'BCNTOW61': { x: 268, y: 742, width: 15, height: 18 },
+//   'BCNTOW60': { x: 293, y: 742, width: 15, height: 18 },
+//   'BCNTOW62': { x: 318, y: 742, width: 15, height: 18 },
+//   'TOWERS78': { x: 415, y: 742, width: 14, height: 26 },
+//   'TOWERS62': { x: 439, y: 742, width: 14, height: 26 },
+//   'TOWERS79': { x: 463, y: 742, width: 14, height: 26 },
+//   'BCNGEN60': { x: 487, y: 742, width: 10, height: 18 },
+//   'BCNGEN61': { x: 507, y: 742, width: 10, height: 18 },
+//   'BCNSTK60': { x: 545, y: 742, width: 8, height: 16 },
+//   'BCNSTK61': { x: 563, y: 742, width: 8, height: 16 },
+//   'BCNGEN68': { x: 581, y: 742, width: 10, height: 18 },
+//   'BCNGEN69': { x: 601, y: 742, width: 10, height: 18 },
+//   'BCNGEN70': { x: 621, y: 742, width: 10, height: 18 },
+//   'BCNGEN71': { x: 641, y: 742, width: 10, height: 18 },
+//   'BOYSPH68': { x: 661, y: 742, width: 19, height: 15 },
+//   'BOYSPH69': { x: 690, y: 742, width: 19, height: 15 },
+//   'BOYSPH70': { x: 719, y: 742, width: 19, height: 15 },
+//   'BOYSPH71': { x: 748, y: 742, width: 19, height: 15 },
+//   'BCNTOW76': { x: 777, y: 742, width: 15, height: 18 },
+//   'TOWERS60': { x: 827, y: 742, width: 14, height: 26 },
+//   'TOWERS61': { x: 851, y: 742, width: 14, height: 26 },
+//   'BCNGEN76': { x: 875, y: 742, width: 10, height: 18 },
+//   'BCNSTK78': { x: 895, y: 742, width: 10, height: 18 },
+//   'TOPMAR23': { x: 913, y: 742, width: 9, height: 6 },
+//   'BCNTOW69': { x: 932, y: 742, width: 15, height: 18 },
+//   'BCNTOW70': { x: 957, y: 742, width: 15, height: 18 },
+//   'BCNTOW71': { x: 982, y: 742, width: 15, height: 18 },
+//   'BCNTOW64': { x: 1007, y: 742, width: 15, height: 18 },
+//   'BCNTOW05': { x: 1032, y: 742, width: 15, height: 18 },
+//   'BCNTOW65': { x: 1057, y: 742, width: 15, height: 18 },
+//   'BCNGEN05': { x: 1082, y: 742, width: 10, height: 18 },
+//   'BCNGEN79': { x: 1102, y: 742, width: 10, height: 18 },
+//   'BCNGEN64': { x: 1122, y: 742, width: 10, height: 18 },
+//   'BOYSPR72': { x: 1142, y: 742, width: 10, height: 18 },
+//   'BCNGEN65': { x: 1162, y: 742, width: 10, height: 18 },
+//   'BCNSTK62': { x: 1182, y: 742, width: 8, height: 16 },
+//   'TOWERS77': { x: 1200, y: 742, width: 14, height: 26 },
+//   'LITVES60': { x: 1390, y: 742, width: 31, height: 23 },
+//   'LITVES61': { x: 1431, y: 742, width: 31, height: 23 },
+//   'BOYSUP65': { x: 10, y: 778, width: 25, height: 16 },
+//   'BOYSPR60': { x: 115, y: 778, width: 10, height: 18 },
+//   'BOYSPR61': { x: 135, y: 778, width: 10, height: 18 },
+//   'BOYSPR65': { x: 155, y: 778, width: 10, height: 18 },
+//   'BCNSTK01': { x: 204, y: 778, width: 8, height: 16 },
+//   'BCNSTK05': { x: 222, y: 778, width: 8, height: 16 },
+//   'TOWERS80': { x: 495, y: 778, width: 14, height: 26 },
+//   'TOWERS81': { x: 519, y: 778, width: 14, height: 26 },
+//   'TOWERS82': { x: 543, y: 778, width: 14, height: 26 },
+//   'TOWERS83': { x: 567, y: 778, width: 14, height: 26 },
+//   'TOWERS84': { x: 591, y: 778, width: 14, height: 26 },
+//   'TOWERS85': { x: 615, y: 778, width: 14, height: 26 },
+//   'TOWERS86': { x: 639, y: 778, width: 14, height: 26 },
+//   'TOWERS87': { x: 663, y: 778, width: 14, height: 26 },
+//   'BCNTOW85': { x: 687, y: 778, width: 15, height: 18 },
+//   'TOWERS89': { x: 712, y: 778, width: 14, height: 26 },
+//   'PILBOP04': { x: 787, y: 778, width: 17, height: 17 },
+//   'BCNGEN80': { x: 862, y: 778, width: 10, height: 18 },
+//   'BCNSTK79': { x: 882, y: 778, width: 10, height: 18 },
+//   'BCNSTK80': { x: 900, y: 778, width: 10, height: 18 },
+//   'TOPMAR99': { x: 918, y: 778, width: 15, height: 11 },
+//   'BOYCAN80': { x: 943, y: 778, width: 19, height: 15 },
+//   'BCNSTK08': { x: 972, y: 778, width: 8, height: 16 },
+//   'BCNSTK81': { x: 989, y: 778, width: 10, height: 18 },
+//   'BOYCON63': { x: 1008, y: 778, width: 19, height: 16 },
+//   'BOYCON65': { x: 1037, y: 778, width: 19, height: 16 },
+//   'BOYMOR31': { x: 1066, y: 778, width: 19, height: 15 },
+//   'NOTBRD12': { x: 1095, y: 778, width: 12, height: 18 },
+//   'TOWERS63': { x: 1117, y: 778, width: 14, height: 26 },
+//   'LITFLT61': { x: 1141, y: 778, width: 31, height: 14 },
+//   'LITFLT10': { x: 1182, y: 778, width: 31, height: 14 },
+//   'TOWERS69': { x: 1223, y: 778, width: 14, height: 26 },
+//   'TOWERS68': { x: 1247, y: 778, width: 14, height: 26 },
+//   'TOWERS70': { x: 1271, y: 778, width: 14, height: 26 },
+//   'TOWERS71': { x: 1295, y: 778, width: 14, height: 26 },
+//   'BCNSTK77': { x: 1319, y: 778, width: 8, height: 16 },
+//   'BCNTOW73': { x: 1337, y: 778, width: 15, height: 18 },
+//   'TOWERS90': { x: 1362, y: 778, width: 14, height: 26 },
+//   'TOWERS91': { x: 1386, y: 778, width: 14, height: 26 },
+//   'TOWERS92': { x: 1410, y: 778, width: 14, height: 26 },
+//   'TOWERS93': { x: 1434, y: 778, width: 14, height: 26 },
+//   'TOWERS94': { x: 10, y: 814, width: 14, height: 26 },
+//   'BCNTOW86': { x: 34, y: 814, width: 15, height: 18 },
+//   'BCNTOW87': { x: 59, y: 814, width: 15, height: 18 },
+//   'BCNTOW88': { x: 84, y: 814, width: 15, height: 18 },
+//   'BCNTOW89': { x: 109, y: 814, width: 15, height: 18 },
+//   'BCNTOW90': { x: 134, y: 814, width: 15, height: 18 },
+//   'BCNTOW91': { x: 159, y: 814, width: 15, height: 18 },
+//   'TOPSHP11': { x: 184, y: 814, width: 15, height: 15 },
+//   'TOPSHP12': { x: 209, y: 814, width: 15, height: 15 },
+//   'TOPSHP13': { x: 234, y: 814, width: 13, height: 34 },
+//   'TOPSHP14': { x: 257, y: 814, width: 15, height: 15 },
+//   'TOPSHP17': { x: 282, y: 814, width: 15, height: 15 },
+//   'TOPSHP16': { x: 307, y: 814, width: 15, height: 15 },
+//   'TOPSHP21': { x: 332, y: 814, width: 15, height: 15 },
+//   'TOPSHP22': { x: 357, y: 814, width: 15, height: 15 },
+//   'TOPSHP23': { x: 382, y: 814, width: 15, height: 15 },
+//   'TOPSHP24': { x: 407, y: 814, width: 15, height: 15 },
+//   'TOPSHP28': { x: 432, y: 814, width: 15, height: 15 },
+//   'TOPSHP34': { x: 457, y: 814, width: 15, height: 15 },
+//   'TOPSHP32': { x: 482, y: 814, width: 15, height: 15 },
+//   'TOPSHP42': { x: 507, y: 814, width: 15, height: 15 },
+//   'TOPSHP44': { x: 532, y: 814, width: 15, height: 15 },
+//   'TOPSHP47': { x: 557, y: 814, width: 15, height: 15 },
+//   'TOPSHP48': { x: 582, y: 814, width: 15, height: 15 },
+//   'TOPSHP51': { x: 607, y: 814, width: 17, height: 16 },
+//   'TOPSHP58': { x: 634, y: 814, width: 17, height: 16 },
+//   'TOPSHP61': { x: 661, y: 814, width: 17, height: 16 },
+//   'TOPSHP62': { x: 688, y: 814, width: 17, height: 16 },
+//   'TOPSHP65': { x: 715, y: 814, width: 17, height: 16 },
+//   'TOPSHP63': { x: 742, y: 814, width: 17, height: 16 },
+//   'TOPSHP64': { x: 769, y: 814, width: 17, height: 16 },
+//   'TOPSHP69': { x: 796, y: 814, width: 17, height: 16 },
+//   'TOPSHP19': { x: 823, y: 814, width: 15, height: 15 },
+//   'TOPSHP20': { x: 848, y: 814, width: 15, height: 15 },
+//   'TOPSHP25': { x: 891, y: 814, width: 15, height: 15 },
+//   'TOPSHP67': { x: 916, y: 814, width: 17, height: 16 },
+//   'TOPSHP29': { x: 943, y: 814, width: 15, height: 15 },
+//   'TOPSHP30': { x: 968, y: 814, width: 15, height: 15 },
+//   'TOPSHP15': { x: 993, y: 814, width: 15, height: 15 },
+//   'TOPSHP43': { x: 1018, y: 814, width: 15, height: 15 },
+//   'TOPSHP50': { x: 1043, y: 814, width: 15, height: 15 },
+//   'TOPSHP70': { x: 1068, y: 814, width: 17, height: 16 },
+//   'TOPSHP35': { x: 1095, y: 814, width: 15, height: 15 },
+//   'TOPSHP10': { x: 1120, y: 814, width: 15, height: 15 },
+//   'TOPSHP09': { x: 1145, y: 814, width: 15, height: 15 },
+//   'TOPSHP71': { x: 1170, y: 814, width: 17, height: 16 },
+//   'TOPSHP31': { x: 1197, y: 814, width: 15, height: 15 },
+//   'TOPSHP55': { x: 1222, y: 814, width: 17, height: 16 },
+//   'BOYCAN65': { x: 1249, y: 814, width: 19, height: 15 },
+//   'TOPSHPA9': { x: 1278, y: 814, width: 13, height: 34 },
+//   'TOPMAR98': { x: 1301, y: 814, width: 17, height: 16 },
+//   'TOPSHP36': { x: 1328, y: 814, width: 15, height: 15 },
+//   'TOPSHP37': { x: 1353, y: 814, width: 15, height: 15 },
+//   'TOPSHP41': { x: 1378, y: 814, width: 15, height: 15 },
+//   'TOPSHP73': { x: 1403, y: 814, width: 17, height: 16 },
+//   'TOPSHP72': { x: 1430, y: 814, width: 17, height: 16 },
+//   'BOYCAN81': { x: 10, y: 858, width: 19, height: 15 },
+//   'TOPSHP74': { x: 39, y: 858, width: 17, height: 16 },
+//   'TOPSHP92': { x: 66, y: 858, width: 13, height: 34 },
+//   'TOPSHP90': { x: 89, y: 858, width: 13, height: 34 },
+//   'TOPSHP91': { x: 112, y: 858, width: 13, height: 34 },
+//   'TOPSHP93': { x: 135, y: 858, width: 13, height: 34 },
+//   'TOPSHP94': { x: 158, y: 858, width: 13, height: 34 },
+//   'TOPSHP95': { x: 181, y: 858, width: 13, height: 34 },
+//   'TOPSHP96': { x: 204, y: 858, width: 13, height: 34 },
+//   'TOPSHP76': { x: 227, y: 858, width: 17, height: 16 },
+//   'TOPSHP97': { x: 254, y: 858, width: 13, height: 34 },
+//   'TOPSHP85': { x: 277, y: 858, width: 17, height: 33 },
+//   'TOPSHP86': { x: 304, y: 858, width: 17, height: 33 },
+//   'TOPSHP01': { x: 331, y: 858, width: 15, height: 15 },
+//   'TOPSHP84': { x: 356, y: 858, width: 17, height: 33 },
+//   'TOPSHP77': { x: 383, y: 858, width: 17, height: 16 },
+//   'TOPSHP99': { x: 410, y: 858, width: 13, height: 34 },
+//   'TOPSHP89': { x: 433, y: 858, width: 17, height: 33 },
+//   'TOPSHP83': { x: 460, y: 858, width: 17, height: 33 },
+//   'TOPSHPA1': { x: 487, y: 858, width: 13, height: 34 },
+//   'TOPSHP82': { x: 510, y: 858, width: 17, height: 33 },
+//   'TOPSHPA0': { x: 537, y: 858, width: 13, height: 34 },
+//   'TOPSHPB0': { x: 560, y: 858, width: 13, height: 34 },
+//   'TOPSHPA2': { x: 583, y: 858, width: 13, height: 34 },
+//   'TOPSHPA3': { x: 606, y: 858, width: 13, height: 34 },
+//   'TOPSHPA4': { x: 629, y: 858, width: 13, height: 34 },
+//   'TOPSHP81': { x: 652, y: 858, width: 17, height: 33 },
+//   'TOPSHPD1': { x: 679, y: 858, width: 15, height: 15 },
+//   'TOPSHPA5': { x: 704, y: 858, width: 13, height: 34 },
+//   'TOPSHPA6': { x: 727, y: 858, width: 13, height: 34 },
+//   'TOPSHP05': { x: 750, y: 858, width: 15, height: 15 },
+//   'TOPSHPA7': { x: 775, y: 858, width: 13, height: 34 },
+//   'TOPSHPA8': { x: 798, y: 858, width: 13, height: 34 },
+//   'TOPSHP08': { x: 821, y: 858, width: 15, height: 15 },
+//   'TOPSHQ19': { x: 846, y: 858, width: 15, height: 15 },
+//   'TOPSHQ21': { x: 871, y: 858, width: 13, height: 34 },
+//   'TOPSHQ20': { x: 894, y: 858, width: 17, height: 33 },
+//   'TOPSHQ22': { x: 921, y: 858, width: 15, height: 15 },
+//   'TOPSHQ23': { x: 946, y: 858, width: 15, height: 15 },
+//   'TOPSHQ24': { x: 971, y: 858, width: 15, height: 15 },
+//   'TOPSHQ25': { x: 996, y: 858, width: 15, height: 15 },
+//   'TOPSHQ26': { x: 1021, y: 858, width: 15, height: 15 },
+//   'TOPSHPD3': { x: 1046, y: 858, width: 15, height: 15 },
+//   'TOPSHP87': { x: 1071, y: 858, width: 17, height: 33 },
+//   'TOPSHP88': { x: 1098, y: 858, width: 17, height: 33 },
+//   'TOPSHP38': { x: 1125, y: 858, width: 15, height: 15 },
+//   'TOPSHP39': { x: 1150, y: 858, width: 15, height: 15 },
+//   'TOPSHP40': { x: 1175, y: 858, width: 15, height: 15 },
+//   'TOPSHP18': { x: 1200, y: 858, width: 15, height: 15 },
+//   'BOYCON79': { x: 1225, y: 858, width: 19, height: 16 },
+//   'BOYCON80': { x: 1254, y: 858, width: 19, height: 16 },
+//   'BOYCON81': { x: 1283, y: 858, width: 19, height: 16 },
+//   'TOPSHPD2': { x: 1312, y: 858, width: 15, height: 15 },
+//   'TOPSHP02': { x: 1337, y: 858, width: 15, height: 15 },
+//   'TOPSHP03': { x: 1362, y: 858, width: 15, height: 15 },
+//   'TOPSHP04': { x: 1387, y: 858, width: 15, height: 15 },
+//   'TOPSHP98': { x: 1412, y: 858, width: 13, height: 34 },
+//   'TOPSHP00': { x: 1435, y: 858, width: 15, height: 15 },
+//   'TOPSHP80': { x: 10, y: 902, width: 17, height: 33 },
+//   'TOPSHP79': { x: 37, y: 902, width: 17, height: 33 },
+//   'TOPSHP06': { x: 64, y: 902, width: 15, height: 15 },
+//   'BOYCON74': { x: 89, y: 902, width: 19, height: 16 },
+//   'BOYCAN82': { x: 118, y: 902, width: 19, height: 15 },
+//   'BOYCAN83': { x: 147, y: 902, width: 19, height: 15 },
+//   'TOPSHPI1': { x: 176, y: 902, width: 15, height: 15 },
+//   'TOPSHQ17': { x: 201, y: 902, width: 17, height: 33 },
+//   'TOPSHPJ1': { x: 228, y: 902, width: 17, height: 33 },
+//   'TOPSHPJ2': { x: 255, y: 902, width: 17, height: 33 },
+//   'TOPMAR01': { x: 282, y: 902, width: 17, height: 33 },
+//   'TOPMAR91': { x: 309, y: 902, width: 17, height: 33 },
+//   'TOPSHQ07': { x: 336, y: 902, width: 15, height: 15 },
+//   'TOPSHQ27': { x: 361, y: 902, width: 13, height: 34 },
+//   'TOPSHPP1': { x: 384, y: 902, width: 15, height: 15 },
+//   'TOPSHQ08': { x: 409, y: 902, width: 15, height: 15 },
+//   'ZZZZZZ01': { x: 434, y: 902, width: 13, height: 34 },
+//   'TOPSHPI2': { x: 457, y: 902, width: 15, height: 15 },
+//   'TOPSHP54': { x: 482, y: 902, width: 17, height: 16 },
+//   'TOPSHPR1': { x: 509, y: 902, width: 15, height: 15 },
+//   'TOPSHQ28': { x: 534, y: 902, width: 15, height: 15 },
+//   'TOPSHPP2': { x: 559, y: 902, width: 15, height: 15 },
+//   'TOPSHP53': { x: 584, y: 902, width: 17, height: 16 },
+//   'TOPSHP52': { x: 611, y: 902, width: 17, height: 16 },
+//   'TOPSHPD4': { x: 638, y: 902, width: 15, height: 15 },
+//   'TOPSHP07': { x: 663, y: 902, width: 15, height: 15 },
+//   'TOPSHPJ3': { x: 688, y: 902, width: 17, height: 33 },
+//   'TOPSHPS1': { x: 715, y: 902, width: 15, height: 15 },
+//   'BCNTOW63': { x: 740, y: 902, width: 15, height: 18 },
+//   'BCNTOW66': { x: 765, y: 902, width: 15, height: 18 },
+//   'TOPSHQ30': { x: 790, y: 902, width: 13, height: 34 },
+//   'TOPSHQ31': { x: 813, y: 902, width: 13, height: 34 },
+//   'TOPSHQ32': { x: 836, y: 902, width: 13, height: 34 },
+//   'TOPSHQ29': { x: 859, y: 902, width: 13, height: 34 },
+//   'TOPSHQ18': { x: 882, y: 902, width: 13, height: 34 },
+//   'TOWERS95': { x: 905, y: 902, width: 14, height: 26 },
+//   'TOPSHQ06': { x: 929, y: 902, width: 13, height: 34 },
+//   'TOWERS96': { x: 952, y: 902, width: 14, height: 26 },
+//   'TOPSHPT1': { x: 976, y: 902, width: 13, height: 34 },
+//   'TOPSHPT2': { x: 999, y: 902, width: 13, height: 34 },
+//   'TOPSHPT3': { x: 1022, y: 902, width: 13, height: 34 },
+//   'TOPSHPT4': { x: 1045, y: 902, width: 13, height: 34 },
+//   'TOPSHPT5': { x: 1068, y: 902, width: 13, height: 34 },
+//   'TOPSHPT6': { x: 1091, y: 902, width: 13, height: 34 },
+//   'TOPSHPT7': { x: 1114, y: 902, width: 13, height: 34 },
+//   'TOPSHPT8': { x: 1137, y: 902, width: 13, height: 34 },
+//   'TOPSHPU1': { x: 1160, y: 902, width: 15, height: 15 },
+//   'TOPSHP78': { x: 1185, y: 902, width: 17, height: 16 },
+//   'TOWERS97': { x: 1212, y: 902, width: 14, height: 26 },
+//   'BOYPIL59': { x: 1236, y: 902, width: 18, height: 18 },
+//   'BOYSUP66': { x: 1264, y: 902, width: 25, height: 16 },
+//   'TOPSHP68': { x: 1299, y: 902, width: 17, height: 16 },
+//   'TOWERS98': { x: 1326, y: 902, width: 14, height: 26 },
+//   'TOWERS99': { x: 1350, y: 902, width: 14, height: 26 },
+//   'TOWERS59': { x: 1374, y: 902, width: 14, height: 26 },
+//   'TOWERS58': { x: 1398, y: 902, width: 14, height: 26 },
+//   'TOWERS57': { x: 1422, y: 902, width: 14, height: 26 },
+//   'TOWERS56': { x: 1446, y: 902, width: 14, height: 26 },
+//   'TOWERS55': { x: 10, y: 946, width: 14, height: 26 },
+//   'BCNTOW74': { x: 34, y: 946, width: 15, height: 18 },
+//   'TOWERS72': { x: 59, y: 946, width: 14, height: 26 },
+//   'TOWERS76': { x: 83, y: 946, width: 14, height: 26 },
+//   'TOWERS75': { x: 107, y: 946, width: 14, height: 26 },
+//   'TOWERS74': { x: 131, y: 946, width: 14, height: 26 },
+//   'TOWERS64': { x: 155, y: 946, width: 14, height: 26 },
+//   'TOWERS54': { x: 179, y: 946, width: 14, height: 26 },
+//   'TOPSHQ15': { x: 203, y: 946, width: 13, height: 34 },
+//   'TOPSHQ16': { x: 226, y: 946, width: 13, height: 34 },
+//   'TOWERS73': { x: 249, y: 946, width: 14, height: 26 },
+//   'TOPSHPI3': { x: 273, y: 946, width: 15, height: 15 },
+//   'TOPSHPU2': { x: 298, y: 946, width: 15, height: 15 },
+//   'TOWERS53': { x: 323, y: 946, width: 14, height: 26 },
+//   'TOWERS65': { x: 347, y: 946, width: 14, height: 26 },
+//   'TOWERS67': { x: 371, y: 946, width: 14, height: 26 },
+//   'TOWERS66': { x: 395, y: 946, width: 14, height: 26 },
+//   'TOWERS52': { x: 419, y: 946, width: 14, height: 26 },
+//   'TOWERS51': { x: 443, y: 946, width: 14, height: 26 },
+//   'TOWERS50': { x: 467, y: 946, width: 14, height: 26 },
+//   'TOWERS88': { x: 491, y: 946, width: 14, height: 26 },
+//   'TOWERS49': { x: 515, y: 946, width: 14, height: 26 },
+//   'TOWERS48': { x: 539, y: 946, width: 14, height: 26 },
+//   'TOPMAR92': { x: 602, y: 946, width: 17, height: 33 },
+//   'TOPSHPD5': { x: 688, y: 946, width: 15, height: 15 },
+//   'BCNSTK82': { x: 712, y: 946, width: 10, height: 18 },
+//   'BCNSTK83': { x: 730, y: 946, width: 10, height: 18 },
+//   'BOYSPH78': { x: 746, y: 946, width: 19, height: 15 },
+//   'TOPMAR90': { x: 35, y: 239, width: 10, height: 10 },
+//   'TOPMAR93': { x: 55, y: 239, width: 10, height: 10 },
 
+// };
 
+// // Helper function to get symbol coordinates
+// export function getSymbol(name) {
+//   return SYMBOL_DEFINITIONS[name] || null;
+// }
 
-  ];
-};
+// export const loadENCSprites = (map, mode = 'day') => {
+//   const spritePath = `/s57data/rastersymbols-${mode}.png`;
+  
+//   console.log(`🗺️ Loading ENC sprites from: ${spritePath}`);
+  
+//   return new Promise((resolve, reject) => {
+//     const img = new Image();
+//     img.crossOrigin = 'anonymous';
+    
+//     img.onload = () => {
+//       console.log(`✅ Sprite sheet loaded: ${img.width}x${img.height}`);
+      
+//       let successCount = 0;
+//       let failCount = 0;
+      
+//       Object.entries(SYMBOL_DEFINITIONS).forEach(([symbolName, coords]) => {
+//         try {
+//           const canvas = document.createElement('canvas');
+//           canvas.width = coords.width;
+//           canvas.height = coords.height;
+//           const ctx = canvas.getContext('2d');
+          
+//           ctx.drawImage(
+//             img,
+//             coords.x, coords.y, coords.width, coords.height,
+//             0, 0, coords.width, coords.height
+//           );
+          
+//           const imageData = ctx.getImageData(0, 0, coords.width, coords.height);
+          
+//           if (!map.hasImage(symbolName)) {
+//             map.addImage(symbolName, imageData, {
+//               sdf: false,
+//               pixelRatio: 1
+//             });
+//             successCount++;
+//           }
+//         } catch (err) {
+//           console.warn(`⚠️ Failed to extract symbol ${symbolName}:`, err);
+//           failCount++;
+//         }
+//       });
+      
+//       console.log(`✅ Extracted ${successCount} symbols, ${failCount} failed`);
+//       resolve(img);
+//     };
+    
+//     img.onerror = (err) => {
+//       console.error('❌ Failed to load sprite sheet:', err);
+//       reject(err);
+//     };
+    
+//     img.src = spritePath;
+//   });
+// };
+
+// // ENC (Electronic Navigational Chart) Layer Configuration
+// // with S-57 (S-52 Day Palette) Colors & Real S-52 Icons from sprite sheet
+
+// // ENC (Electronic Navigational Chart) Layer Configuration
+// // S-57 / S-52 (Day Palette) - OpenCPN-style rendering with sprite icons
+
+// export const getEncLayers = () => {
+//   return [
+//     // =====================
+//     // LAND AREAS (LNDARE)
+//     // =====================
+//     {
+//       id: 'enc-lndare-fill',
+//       type: 'fill',
+//       source: 'active-basemap',
+//       'source-layer': 'lndare_polygons',
+//       paint: {
+//         'fill-color': '#D9C29E', // S-52 LANDA
+//         'fill-opacity': 1
+//       }
+//     },
+//     {
+//       id: 'enc-lndare-outline',
+//       type: 'line',
+//       source: 'active-basemap',
+//       'source-layer': 'lndare_polygons',
+//       paint: {
+//         'line-color': '#826644', // S-52 LANDB
+//         'line-width': 1
+//       }
+//     },
+
+//     // =====================
+//     // DEPTH AREAS (DEPARE)
+//     // =====================
+//     {
+//       id: 'enc-depare-fill',
+//       type: 'fill',
+//       source: 'active-basemap',
+//       'source-layer': 'depare_polygons',
+//       paint: {
+//         'fill-color': [
+//           'interpolate',
+//           ['linear'],
+//           ['get', 'drval1'],
+//           0, '#9AD5FF',   // DEPVS (Very Shallow)
+//           10, '#77B5FF',  // DEPMD (Medium)
+//           50, '#508CFF',  // DEPIT (Intermediate)
+//           200, '#285AFF'  // DEPDW (Deep)
+//         ],
+//         'fill-opacity': 0.6
+//       }
+//     },
+
+//     // =====================
+//     // DEPTH CONTOURS (DEPCNT)
+//     // =====================
+//     {
+//       id: 'enc-depcnt-lines',
+//       type: 'line',
+//       source: 'active-basemap',
+//       'source-layer': 'depcnt_lines',
+//       paint: {
+//         'line-color': '#94BFFF', // DEPCN
+//         'line-width': 1,
+//         'line-dasharray': [2, 2]
+//       }
+//     },
+
+//     // =====================
+//     // COASTLINE (COALNE)
+//     // =====================
+//     {
+//       id: 'enc-coastline-lines',
+//       type: 'line',
+//       source: 'active-basemap',
+//       'source-layer': 'coalne_lines',
+//       paint: {
+//         'line-color': '#6B4423', // CSTLN
+//         'line-width': 1.5
+//       }
+//     },
+
+//     // =======================================================
+//     // BUOYS (BOYLAT, BOYSPP, BOYSAW) — OpenCPN-style layering
+//     // =======================================================
+
+//     // --- Base Buoys ---
+//     {
+//       id: 'enc-boylat-symbols',
+//       type: 'symbol',
+//       source: 'active-basemap',
+//       'source-layer': 'boylat',
+//       minzoom: 10,
+//       layout: {
+//         'icon-image': [
+//           'case',
+//           ['has', 'boyshp'],
+//           [
+//             'match',
+//             ['to-number', ['get', 'boyshp']],
+//             1, 'BOYLAT13', // Conical (port)
+//             2, 'BOYLAT14', // Can (starboard)
+//             3, 'BOYLAT23', // Pillar
+//             4, 'BOYLAT24', // Spar
+//             5, 'BOYLAT50',
+//             6, 'BOYLAT51',
+//             7, 'BOYLAT25',
+//             'BOYLAT13'
+//           ],
+//           'BOYLAT13'
+//         ],
+//         'icon-size': 1.1,
+//         'icon-allow-overlap': true,
+//         'icon-ignore-placement': true
+//       },
+//       paint: { 'icon-opacity': 1 }
+//     },
+
+//     {
+//       id: 'enc-boyspp-symbols',
+//       type: 'symbol',
+//       source: 'active-basemap',
+//       'source-layer': 'boyspp',
+//       minzoom: 10,
+//       layout: {
+//         'icon-image': [
+//           'match',
+//           ['to-number', ['coalesce', ['get', 'boyshp'], 1]],
+//           1, 'BOYSPP11',
+//           2, 'BOYSPP15',
+//           3, 'BOYSPP25',
+//           'BOYSPP11'
+//         ],
+//         'icon-size': 1.1,
+//         'icon-allow-overlap': true,
+//         'icon-ignore-placement': true
+//       },
+//       paint: { 'icon-opacity': 1 }
+//     },
+
+//     {
+//       id: 'enc-boysaw-symbols',
+//       type: 'symbol',
+//       source: 'active-basemap',
+//       'source-layer': 'boysaw',
+//       minzoom: 10,
+//       layout: {
+//         'icon-image': 'BOYSPP15', // safe-water buoy
+//         'icon-size': 1.1,
+//         'icon-allow-overlap': true,
+//         'icon-ignore-placement': true
+//       },
+//       paint: { 'icon-opacity': 1 }
+//     },
+
+//     // --- Topmarks (TOPMARxx) ---
+//     {
+//       id: 'enc-buoy-topmarks',
+//       type: 'symbol',
+//       source: 'active-basemap',
+//       'source-layer': 'boylat',
+//       minzoom: 10,
+//       filter: ['has', 'topshp'],
+//       layout: {
+//         'icon-image': [
+//           'match',
+//           ['to-number', ['get', 'topshp']],
+//           1, 'TOPMAR93',
+//           2, 'TOPMAR77',
+//           3, 'TOPMAR95',
+//           4, 'TOPMAR96',
+//           5, 'TOPMAR97',
+//           'TOPMAR93'
+//         ],
+//         'icon-size': 1.0,
+//         'icon-offset': [0, -20],
+//         'icon-allow-overlap': true,
+//         'icon-ignore-placement': true
+//       },
+//       paint: { 'icon-opacity': 1 }
+//     },
+
+//     // --- Lights (LIGHTSxx) ---
+//     {
+//       id: 'enc-buoy-lights',
+//       type: 'symbol',
+//       source: 'active-basemap',
+//       'source-layer': 'boylat',
+//       minzoom: 10,
+//       filter: ['has', 'catlit'],
+//       layout: {
+//         'icon-image': [
+//           'match',
+//           ['to-number', ['get', 'catlit']],
+//           1, 'LIGHTS11',
+//           4, 'LIGHTS12',
+//           5, 'LIGHTS13',
+//           8, 'LIGHTS81',
+//           9, 'LIGHTS82',
+//           'LIGHTS11'
+//         ],
+//         'icon-size': 1.3,
+//         'icon-offset': [0, -15],
+//         'icon-allow-overlap': true,
+//         'icon-ignore-placement': true
+//       },
+//       paint: { 'icon-opacity': 0.9 }
+//     },
+
+//     // --- Buoy Labels ---
+//     {
+//       id: 'enc-buoy-labels',
+//       type: 'symbol',
+//       source: 'active-basemap',
+//       'source-layer': 'boylat',
+//       minzoom: 11,
+//       layout: {
+//         'text-field': ['coalesce', ['get', 'objnam'], ''],
+//         'text-size': 11,
+//         'text-anchor': 'top',
+//         'text-offset': [0, 1.1],
+//         'text-font': ['Open Sans Regular', 'Arial Unicode MS Regular']
+//       },
+//       paint: {
+//         'text-color': '#000000',
+//         'text-halo-color': '#FFFFFF',
+//         'text-halo-width': 2
+//       }
+//     },
+
+//     // =======================================================
+//     // BEACONS (BCNLAT, BCNSPP) — OpenCPN-style
+//     // =======================================================
+
+//     {
+//       id: 'enc-bcnlat-symbols',
+//       type: 'symbol',
+//       source: 'active-basemap',
+//       'source-layer': 'bcnlat',
+//       minzoom: 10,
+//       layout: {
+//         'icon-image': [
+//           'match',
+//           ['to-number', ['coalesce', ['get', 'bcnshp'], 1]],
+//           1, 'BCNLAT15',
+//           3, 'BCNLAT16',
+//           4, 'BCNLAT21',
+//           5, 'BCNLAT22',
+//           7, 'BCNLAT23',
+//           'BCNLAT15'
+//         ],
+//         'icon-size': 1.1,
+//         'icon-allow-overlap': true,
+//         'icon-ignore-placement': true
+//       },
+//       paint: { 'icon-opacity': 1 }
+//     },
+
+//     {
+//       id: 'enc-bcnspp-symbols',
+//       type: 'symbol',
+//       source: 'active-basemap',
+//       'source-layer': 'bcnspp',
+//       minzoom: 10,
+//       layout: {
+//         'icon-image': [
+//           'match',
+//           ['to-number', ['coalesce', ['get', 'bcnshp'], 1]],
+//           1, 'BCNSPP13',
+//           3, 'BCNSPP13',
+//           4, 'BCNSPP21',
+//           5, 'BCNSPP21',
+//           'BCNSPP13'
+//         ],
+//         'icon-size': 1.1,
+//         'icon-allow-overlap': true,
+//         'icon-ignore-placement': true
+//       },
+//       paint: { 'icon-opacity': 1 }
+//     },
+
+//     // --- Beacon Topmarks ---
+//     {
+//       id: 'enc-beacon-topmarks',
+//       type: 'symbol',
+//       source: 'active-basemap',
+//       'source-layer': 'bcnlat',
+//       minzoom: 10,
+//       filter: ['has', 'topshp'],
+//       layout: {
+//         'icon-image': [
+//           'match',
+//           ['to-number', ['get', 'topshp']],
+//           1, 'TOPMAR93',
+//           2, 'TOPMAR77',
+//           3, 'TOPMAR95',
+//           'TOPMAR93'
+//         ],
+//         'icon-size': 1.0,
+//         'icon-offset': [0, -20],
+//         'icon-allow-overlap': true,
+//         'icon-ignore-placement': true
+//       },
+//       paint: { 'icon-opacity': 1 }
+//     },
+
+//     // --- Beacon Lights ---
+//     {
+//       id: 'enc-beacon-lights',
+//       type: 'symbol',
+//       source: 'active-basemap',
+//       'source-layer': 'bcnlat',
+//       minzoom: 10,
+//       filter: ['has', 'catlit'],
+//       layout: {
+//         'icon-image': [
+//           'match',
+//           ['to-number', ['get', 'catlit']],
+//           1, 'LIGHTS11',
+//           4, 'LIGHTS12',
+//           5, 'LIGHTS13',
+//           8, 'LIGHTS81',
+//           9, 'LIGHTS82',
+//           'LIGHTS11'
+//         ],
+//         'icon-size': 1.3,
+//         'icon-offset': [0, -15],
+//         'icon-allow-overlap': true,
+//         'icon-ignore-placement': true
+//       },
+//       paint: { 'icon-opacity': 0.9 }
+//     },
+
+//     // --- Beacon Labels ---
+//     {
+//       id: 'enc-beacon-labels',
+//       type: 'symbol',
+//       source: 'active-basemap',
+//       'source-layer': 'bcnlat',
+//       minzoom: 12,
+//       layout: {
+//         'text-field': ['coalesce', ['get', 'objnam'], ['get', 'name'], ''],
+//         'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
+//         'text-size': 10,
+//         'text-anchor': 'top',
+//         'text-offset': [0, 0.8],
+//         'text-allow-overlap': false
+//       },
+//       paint: {
+//         'text-color': '#000000',
+//         'text-halo-color': '#FFFFFF',
+//         'text-halo-width': 2
+//       }
+//     }
+//   ];
+// };
+

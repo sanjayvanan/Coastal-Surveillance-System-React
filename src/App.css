@@ -399,3 +399,59 @@
   border-bottom: 1px solid #666;
   color: #eee;
 }
+
+
+
+/* ... keep all your other styles ... */
+
+/* New Unified Scale Display Styles */
+.scale-display-container {
+  position: absolute;
+  bottom: 60px; /* Position it above the bottom bar */
+  left: 20px;
+  background-color: rgba(0, 0, 0, 0.65);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 12px;
+  z-index: 1500;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px; /* Space between elements */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.scale-text-above,
+.scale-text-below {
+  text-align: center;
+}
+
+.scale-bar {
+  position: relative;
+  height: 6px; /* Height of the scale bar line area */
+  border-left: 1px solid white;  /* Left tick mark */
+  border-right: 1px solid white; /* Right tick mark */
+  display: flex;
+  align-items: center;
+}
+
+/* This pseudo-element creates the horizontal line */
+.scale-bar::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background-color: white;
+  transform: translateY(-50%);
+}
+
+.scamin-indicator-text {
+  color: #ff4d4d; /* Red color for the warning */
+  font-weight: bold;
+  margin-top: 2px;
+}

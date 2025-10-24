@@ -1,4 +1,5 @@
-import { getEncLayers } from './encLayers'
+import { getAutoEncLayers } from './autoEncLayers';
+
 
 export const mapStyle = {
   version: 8,
@@ -13,6 +14,10 @@ export const mapStyle = {
   glyphs: 'https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf'
 }
 
+/**
+ * Get basemap layers synchronously
+ * For ENC, returns empty array - ENC layers are loaded separately
+ */
 export function getBasemapLayers(basemapType) {
   const sourceId = 'active-basemap'
   
@@ -43,7 +48,9 @@ export function getBasemapLayers(basemapType) {
       ]
     
     case 'enc':
-      return getEncLayers()
+      // Return static ENC layers as fallback
+      // Smart layers loaded separately in MapComponent
+      return getAutoEncLayers();
     
     case 'openstreetmap':
     case 'dark':
@@ -59,6 +66,23 @@ export function getBasemapLayers(basemapType) {
           'raster-fade-duration': 300 
         }
       }]
+  }
+}
+
+/**
+ * Get ENC layers asynchronously from S-52 rules
+ * This loads the auto-generated layers from the parser
+ */
+export async function getEncLayersAsync() {
+  try {
+    const { getSmartEncLayers } = await import('./autoEncLayers')
+    const layers = await getSmartEncLayers()
+    console.log(`✅ Loaded ${layers.length} smart ENC layers from S-52 rules`)
+    return layers
+  } catch (error) {
+    console.error('❌ Failed to load smart ENC layers:', error)
+    // Fallback to static layers
+    return getEncLayers()
   }
 }
 
